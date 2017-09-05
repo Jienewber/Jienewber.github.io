@@ -1,3 +1,36 @@
-body {
-	text-align: center;
+#wrapper {
+  margin: 0px auto;
+  width: 800px;
+  background-color: #eeeeee;
+  padding: 20px;
+  overflow: auto;
+  // necessary for "clearing" the floats
+  // contained within
 }
+
+p {
+    background-color: #dddddd;
+    padding: 20px;
+    width: 320px;
+    margin: 10px;
+    float: left;
+    // float allows us to flexibly stack items
+    // in multiple columns
+}
+
+img {
+    padding: 20px;
+    width: 320px;
+    margin: 10px;
+    float: left;
+}
+
+h1 {
+    font-family: Verdana, Geneva, sans-serif;
+    margin-left: 24px;
+}
+
+a:hover {
+	color: orange;
+}
+

@@ -4,16 +4,21 @@
 	<head>
     	<meta charset="utf-8"> 
     	<title>Hello World</title>
+    	<!-- Make everything align to the center by refer to main.css file in the website folder -->
+    	<link href="css/main.css" rel="stylesheet" />
 	</head>
 	<!-- BODY element containing all document content elements -->
 	<body>
 		<!-- The h1 tag signifies a heading, this is a bolded style of text that vary in size ranging from h1 to h6. The p tag signifies a paragraph that can contain large blocks of text.  -->
-		<h1 id="headtext">Body Heading</h1>
-		<p id="foo">This is my first paragragh.</p>
-		<p id="bar">This is my second paragraph.</p>
-		<div id="main">
-			<!-- Content goes here -->
-			...
+		<div id="wrapper">
+			<h1 id="headtext">Body Heading</h1>
+			<p id="foo">This is my first paragragh.</p>
+			<p id="bar">This is my second paragraph.
+				<!-- Add links and open in a new page by target attribute-->
+				<a href="http://dusp.mit.edu" target="_blank">Take me to DUSP.</a>
+				<a href="http://maps.google.com" target="_blank">Google Map.</a>
+			</p>
+			<img src="images/cat.jpg"/>
 		</div>
 	</body>
 </html>
