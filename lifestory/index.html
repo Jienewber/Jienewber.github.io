@@ -1,0 +1,86 @@
+<html>
+<head>
+  <title>Journey with Annoying Orange</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"
+   integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ=="
+   crossorigin=""/>
+  
+  <!-- Make sure you put this AFTER Leaflet's CSS -->
+  <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"
+   integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log=="
+   crossorigin=""></script>
+
+  <style>
+   body {padding: 0; margin: 0;} html, body, #mapid {height: 100vh; width: 100vw;}
+  </style>
+</head>
+
+<body>
+
+  <div id="mapid"></div>
+
+  <script>
+
+  // initialize the map: set its view to our chosen geographical coordinates and a zoom level
+  var mymap = L.map('mapid').setView([40.284404, -96.876481], 4);
+
+  // load a tile layer
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV3YmVyODQiLCJhIjoiY2ozanJsdzc3MDBmZzMycXN5a3YwdDI4cyJ9.2Bsck9PsZA2uEuuqqayH3g', 
+    {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 18,
+    }).addTo(mymap);
+
+  // add a marker, a circle, and a polygon
+  var markerCT = L.marker([41.790532, -72.557785]).addTo(mymap).bindPopup("<b>Manchester, CT</b><br>2016.1 I visited Manchester for Jiabin's birthday and told you that I'm within driving distance from Boston, you asked if I want you to come, and I said Yes and you just came driving in the Rain.<br><br>2017.8 I was a little bit drunk at Jiabin's last day party with her friends, I missed your calls and let Jiabin to call back, once again you asked if I want you to come, it really felt like yesterday once more and you came! Extremely touching and felt spoiled T_T");
+  
+  var markerMA = L.marker([42.347140, -71.082121]).addTo(mymap).bindPopup("<b>Boston, MA</b><br>2016.2 Jiabin invited us to go snowboarding and it's my first time came to Boston for you. At first I planned to be with you for your birthday but thought it might be too deliberate and bother you a lot, so I didn't do it.<br><br>2017.5 Visited you after attending my friend's wedding in Philly, first time tried some body touching, but failed if I didn't remember it wrong.<br><br>2017.8 Dinner at Top of the Hub in Prudential. I remembered you mentioned this place once when I visited in May, though we didn't make it, I got an idea that this must be a speical place for some special events. And this time you asked me to ask Jiabin where she wants to have her last dinner in Boston. I asked you for this same question as well, and you both gave the same answer, no wonder you guys have more than 90% similarities, and you urged me to wear a dress otherwise you won't be there, okay, I did it and hopefully you liked it. I thought I was an elegant lady that night, except for acting a little bit wired after one cocktail.<br><br>To tell the truth, I feel like I can't behave like myself when there are only the two of us, without a third person, not talkative nor lively at all. Am I more used to long distance and talk in WeChat? Still attempting to figure it out and trying to be a 有意思的人.<br><br>To do list in Boston this time:<br>Beer tower.<br>Sailing in Charles River.<br>Walking with fingers laced.<br>Making some 黑暗料理 at home.<br><br>So, are you hungry right now and want to check one of the things in my list?");
+  
+  var markerVT = L.marker([43.620388, -72.802571]).addTo(mymap).bindPopup("<b>Killington, VT</b><br>2016.1 Second time snowboarding together!! I still remember we had a crash on the long Great-Eastern trail, and you said 我简直撞出了你的大姨妈...");
+  
+  var markerBaltimore = L.marker([39.285150, -76.608300]).addTo(mymap).bindPopup("<b>Baltimore, MD</b><br>2016.3 I loved the National Aquarium but felt very isolated with you and your old friend. It made me feel like I knew little about you and just wished not being there. You never know how down I felt when I was sitting in Union Station alone & lonely and wanted to come back home to Philly asap. I didn't have any courage to contact you again and even not told you I would move to California. And again thanks for contacting me again and sending the Lego as birthday gift, otherwise I didn't know how to continue our story.");
+  
+  var markerLAS = L.marker([36.112550, -115.170649]).addTo(mymap).bindPopup("<b>Las Vegas, NV</b><br>2015.12.24 Paris Las Vegas, here we met ❤️ <br>My flight from philly was late and I was the last person joining you guys in the hotel. The first impression of you：sitting cross legged on the bed, with one hand under cheek, with mushroom-like short hair, with deep, charming voice. But you and Tu Yao went to some Chippendales show, and Weiqi and I went to David Copperfield, no more intersections that very first day.<br><br>2016.12.22 I was appreciated for you asking me if I wanted to travel together that Xmas, and luckily I had no plans then but only one 驴友 Jiabin who was willing to visit California after hearing your plan. It's a long waiting at LAS airport for you three. When you guys arrived I tried to avoid direct eye contact with this young lady wear a bright Miami color jacket. I wanted to give you a warm hug but hesitated, not sure how closed we were by then. But gradually the same hotel and Xmas atmosphere dragged my memories and feelings back. Every sha-la-la-la Every wo-o-wo-o Still shines.");
+
+  var markerZion = L.marker([37.298619, -113.026109]).addTo(mymap).bindPopup("<b>Zion NP, UT</b><br>2015.12 First co-selfie for us. First individual time for us to explore every small slopes on the top waiting for the Polaroid girl.");
+
+  var markerBryceCanyon = L.marker([37.628243, -112.162874]).addTo(mymap).bindPopup("<b>Bryce Canyon NP, UT</b><br>2015.12 Coldest day in my life, -20C, but the hoodoos in sunset are really really breathtaking");
+
+  var markerGrandCanyon = L.marker([36.052965, -112.083930]).addTo(mymap).bindPopup("<b>Grand Canyon NP, UT</b><br>2015.12 Not sure if it's South Kaibab Trail (tell me if it's wrong), all I remembered was seeing your rear profile in the wild plants and the only words in my mind, 她在丛中笑 ლ(╹◡╹ლ)");
+
+  var markerCanyonLands = L.marker([38.459799, -109.820962]).addTo(mymap).bindPopup("<b>Dead Horse Point & Canyonlands NP, UT</b><br>2015.12 Island in the Sky, the highlight of this trip. I really really really love the purple color rendering the valley after sunset.");
+
+  var markerArches = L.marker([38.743629, -109.499309]).addTo(mymap).bindPopup("<b>Arches NP, UT</b><br>2015.12 Long trail to the Delicate Arch, I thought I came to the summit like 30 minutes late than you. (⇀‸↼‶) the only time in this trip that we set up ourselvesvery well waiting for the gorgeous sunset. Absolutely worth it.");
+
+  var markerColorado = L.marker([39.501558, -106.157333]).addTo(mymap).bindPopup("<b>Copper Mountain, CO</b><br>2015.12 First time snowboarding for me. Thanks thanks a lot for telling that maybe I can switch to snowboarding class though I signed up for skiing. As told you before, I began to know this sport from Jung Yong Hwa, the lead vocalist and rhythm guitarist CNBLUE. In 2011, when I saw him teach snowboarding for his virtually wedded wife in a TV show called We Got Married, I began dreaming that kind of thing can happen to me someday and felt like trying snowboarding one day. So that day on Cooper Mountain is like a dream come true. You never know how happy I was when I saw the girl with a green halmet came to find me and helped me figure out how to stop the board instead of falling to make a stop at the end of the day. ー( ´ ▽ ` )ﾉ");
+
+  var markerDenver = L.marker([39.791003, -104.970404]).addTo(mymap).bindPopup("<b>Denver, CO</b><br>2015.12.31 New year's eve. I really doubt if it's YOU that suggest trying every possible combination of assigning beds. Anyways I felt so nervous before sleeping and didn't expect you would ask if we would be able see each other in the future. I just said probably and didn't know it would be just 10 days later in Jiabin's apartment.");
+  
+  var markerDeathValley = L.marker([36.463230, -116.868877]).addTo(mymap).bindPopup("<b>Death Valley NP, CA</b><br>2016.12 3-day camping at Furnace Creek Campground, once in a life time. I love the long hiking Mesquite Flat Sand Dunes under the drizzle. I love explore the undefined Mosaic Canyon trail, finding arrows or marks all the way and trying all posibilities. I love watching the milkyway and constellations with the app at Badwater Salt Flat. I love the Ubehebe crater loop. I love the sunrise and making interesting figure shadows at Golden Canyon. It would be a perfect trip if we were able to take showers. >.<");
+  
+  var markerKingsCanyon = L.marker([36.741793, -118.960531]).addTo(mymap).bindPopup("<b>Kings Canyon NP, CA</b><br>2016.12 Milkyway through fantastic Sequoia, and you're 上知天文 in the sense of taking beautiful picture of the stars. Unforgetable first-time drunk at John Muir Lodge, and I loved you holding me tight, on the ground though, comforting me no need to worry about making a great mess in the hotel, and arguing you're not believing in 星座. You never know how cute you were that night. Wrestling with you during the hiking towards Panoramic Point is really 胳膊拗不过大腿, but I loved it, some skinship thing.");
+  
+  var markerMonterey = L.marker([36.595444, -121.893233]).addTo(mymap).bindPopup("<b>Monterey, CA</b><br>2016.12.29/30 Let's remember this place Casa Munras Garden Hotel & Spa.❤️ <br><br>Thanks to the expensive food in the restaurant Casanova in Carmel-By-The-Sea, I was not full and easily got dizzy that night, AND you were absolutely abnormal too. It's the 地咚 that reminded me of my feelings for you, and every word I said revealed the deepest secret in my heart. Thank God you said you felt the same way for me. I loved you said I gave you positive feedbacks so you had courages to tell me how you feel, but I hated you said that we missed the whole year, my bad, sorry honey. We talked on the beach bench outside our room, hugged tightly by the side of the swimming pool, walked around in the hotel and stoped by the gate guard. We must have looked like some drunk homeless, but I showed him our card to the door. See I'm smart and not drunk at all =P. Felt like I was the luckiest and happiest girl in the world that night, just like 我的世界星星都亮了. <br><br>Btw, I liked the idea of skating the next morning, since I didn't know how to skate and had every reason to hug you suddenly .⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄");
+
+  var markerHalfDome = L.marker([37.745985, -119.533199]).addTo(mymap).bindPopup("<b>Yosemite NP, CA</b><br>2017.5 We conquered Half Dome with ropes, harness, and carabiners when the cable is down!<br>Let's call it a day!");
+
+  var markerSanJose = L.marker([37.335273, -121.889521]).addTo(mymap).bindPopup("<b>San Jose, CA</b><br>2017.5 Well, we explored something together during your busy schedule in the CLEO conference.❤️ <br>I know it's your excuse to spend a week with me. I know we need to explore more, maybe tonight. Hey baby, I call it an offer.⁄(⁄ ⁄•⁄ω⁄•⁄ ⁄)⁄");
+
+  var markerDavis = L.marker([38.538345, -121.761541]).addTo(mymap).bindPopup("<b>Davis, CA</b><br>2017.5 First time holding hands walkings in a place where nobody knows us. I knew my hands were watering but believe me I was not nervous.");
+
+
+  // use popup as a layer: Here we use openOn instead of addTo because it handles automatic closing of a previously opened popup when opening a new one which is good for usability.
+  // This function shows a popup for the click event
+  var popup = L.popup();
+
+  function onMapClick(e) {
+    popup
+        .setLatLng(e.latlng)
+        .setContent("You clicked the map at " + e.latlng.toString() + "<br>We have not been there together yet.")
+        .openOn(mymap);
+  }
+  mymap.on('click', onMapClick);
+
+  </script>
+</body>
+</html>
