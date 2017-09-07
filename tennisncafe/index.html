@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Leaflet Pilot</title>
+	<!-- Add reference to Leaflet CSS file -->
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
+	<!-- Reference the GeoJSON file, also add "var coffee_cafes" = at the top of the GeoJSON file, keep the name of the variable same with the file's name, this is IMPORTANT -->
+	<script src="data/coffee_cafes.geojson" type="text/javascript"></script>
+</head>
+<body>
+	<!-- Add a div to contain the map-->
+	<div id="map" style="width: 705px; height: 375px"></div>
+
+	<!-- Add a reference to Leaflet Javascript and jQuery file BEFORE using any Leaflet library to create the map layer -->
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+	<!-- Web Map scripts -->
+	<script >
+		var mymap = L.map("map").setView([42.36933, -71.10695], 13);
+
+		L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV3YmVyODQiLCJhIjoiY2ozanJsdzc3MDBmZzMycXN5a3YwdDI4cyJ9.2Bsck9PsZA2uEuuqqayH3g', { attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>, Imagery &copy <a href="http://mapbox.com">Mapbox</a>' }).addTo(mymap);
+
+		// Create point feature for tennis courts in MIT and Harvard with customized icon
+		var tennisIcon = L.icon({
+    		iconUrl:'images/tennis-15.svg',
+    		iconSize:[25, 25]
+		});
+
+		var MITtennis = L.marker([42.356855, -71.097759], {icon: tennisIcon}).addTo(mymap);
+
+		var HarvardTennis = L.marker([42.369535, -71.128616], {icon: tennisIcon}).addTo(mymap);
+
+		// Create line feature for Mass Ave Bridge, style and add to map
+		var MassAveBridge = L.polyline([[42.357227, -71.092631], [42.351411, -71.089723]], {color: '#2CA390', weight: 4}).addTo(mymap);
+
+		// Create area feature for MIT, style and add to map
+		var MITcampus = L.polygon([[42.353770, -71.103606], [42.355447, -71.104475],[42.362681, -71.089830], [42.361829, -71.079230]], {color: '#DD5444', weight: 4}).addTo(mymap);
+
+		// Bind Popups: within our popup, we can add links, images, lists, and many other HTML elements. Also we can define styles.
+		HarvardTennis.bindPopup("<h3>Tennis courts in Harvard.</h3><p>Cambridge, MA<br>Information about Beren Tennis Center.</p>").openPopup();
+
+		MITtennis.bindPopup("<h3>Tennis courts in MIT.</h3><p>Cambridge, MA<br>Information about MIT Outdoor Tennis Courts.</p>");
+
+		MassAveBridge.bindPopup("<h4>Mass Ave Bridge over Charles River</h4><p>Cambridge, MA<br>You can do sailing here!</p>");
+
+		MITcampus.bindPopup("<h4>MIT Campus</h4><p>Cambridge, MA<br>Click here for a interactive campus map.</p>");
+
+		var popup = L.popup();
+
+		function onMapClick(e) {
+			popup
+		        .setLatLng(e.latlng)
+		        .setContent("You clicked the map at " + e.latlng.toString())
+		        .openOn(mymap);
+		}
+		mymap.on('click', onMapClick);
+
+		// Add the features in the GeoJSON file to the map
+		L.geoJson(coffee_cafes, {
+			// Use a customized icon. Notes: there should be a "new" before L.Icon when defining the icon
+			pointToLayer: function(feature, latlng) {
+                var coffeeIcon = new L.Icon({
+                	iconUrl:'images/teahouse-15.svg',
+    				iconSize:[15, 15]
+                });
+                return L.marker(latlng, {icon: coffeeIcon});
+            },
+            // Bind popups using one the attributes (what's called properties in GeoJSON file)
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup(feature.properties.name);
+			}
+		}).addTo(mymap);
+	</script>
+</body>
+</html>
