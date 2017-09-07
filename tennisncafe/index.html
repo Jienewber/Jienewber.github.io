@@ -70,9 +70,9 @@
                 });
                 return L.marker(latlng, {icon: coffeeIcon});
             },
-            // Bind popups using one the attributes (what's called properties in GeoJSON file)
+            // Bind popups using multiple the attributes (what's called properties in GeoJSON file), learn the way of writing the format, can't put attributes in quotes.
 			onEachFeature: function(feature, layer) {
-				layer.bindPopup(feature.properties.name);
+				layer.bindPopup('<h3>' + feature.properties.name + '</h3><p>' + feature.properties.address + '<br>' + feature.properties.city + '<br>' + feature.properties.state + ', ' + feature.properties.zip + '</p>');
 			}
 		}).addTo(mymap);
 	</script>
