@@ -42,13 +42,13 @@
 		var MITcampus = L.polygon([[42.353770, -71.103606], [42.355447, -71.104475],[42.362681, -71.089830], [42.361829, -71.079230]], {color: '#DD5444', weight: 4}).addTo(mymap);
 
 		// Bind Popups: within our popup, we can add links, images, lists, and many other HTML elements. Also we can define styles.
-		HarvardTennis.bindPopup("<h3>Tennis courts in Harvard.</h3><p>Cambridge, MA<br>Information about Beren Tennis Center.</p>").openPopup();
+		HarvardTennis.bindPopup('<h3>Tennis courts in Harvard.</h3><p>Cambridge, MA<br>Information about <a href="http://www.gocrimson.com/sports/mten/facilities/beren" target="_blank">Beren Tennis Center.<br><img class="card-img-top" src="images/harvard.svg" alt="" width=100vw></a></p>').openPopup();
 
-		MITtennis.bindPopup("<h3>Tennis courts in MIT.</h3><p>Cambridge, MA<br>Information about MIT Outdoor Tennis Courts.</p>");
+		MITtennis.bindPopup('<h3>Tennis courts in MIT.</h3><p>Cambridge, MA<br>Information about <a href="http://www.mitathletics.com/information/facilities/tennisvenues" target="_blank">MIT Outdoor Tennis Courts.<br><img class="card-img-top" src="images/mit.svg" alt="" width=100vw></a></p>');
 
-		MassAveBridge.bindPopup("<h4>Mass Ave Bridge over Charles River</h4><p>Cambridge, MA<br>You can do sailing here!</p>");
+		MassAveBridge.bindPopup('<h4>Mass Ave Bridge over Charles River</h4><p>Cambridge, MA<br>You can do <a href="http://sailing.mit.edu/">sailing</a> here!<br><img class="card-img-top" src="images/charlesriver.jpg" alt="" width=100vw></p>');
 
-		MITcampus.bindPopup("<h4>MIT Campus</h4><p>Cambridge, MA<br>Click here for a interactive campus map.</p>");
+		MITcampus.bindPopup('<h4>MIT Campus</h4><p>Cambridge, MA<br>Click here for an <a href="https://whereis.mit.edu/" target="_blank">interactive campus map.<br><img class="card-img-top" src="images/mit.svg" alt="" width=100vw></a></p>');
 
 		var popup = L.popup();
 
