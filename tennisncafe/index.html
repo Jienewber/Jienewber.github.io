@@ -6,10 +6,14 @@
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css"/>
 	<!-- Reference the GeoJSON file, also add "var coffee_cafes" = at the top of the GeoJSON file, keep the name of the variable same with the file's name, this is IMPORTANT -->
 	<script src="data/coffee_cafes.geojson" type="text/javascript"></script>
+	<!-- Make the basemap fit into the window -->
+	<style>
+   	body {padding: 0; margin: 0;} html, body, #map {height: 100vh; width: 100vw;}
+  	</style>
 </head>
 <body>
 	<!-- Add a div to contain the map-->
-	<div id="map" style="width: 705px; height: 375px"></div>
+	<div id="map"></div>
 
 	<!-- Add a reference to Leaflet Javascript and jQuery file BEFORE using any Leaflet library to create the map layer -->
 	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
