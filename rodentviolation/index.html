@@ -14,7 +14,7 @@
 	<!-- Our web map and content will go here -->
 	<div id="wrapper">
 		<div id="header">
-			<h1><img src="images/map-logo.png" alt="Coffee Cup Logo" style="height: 38px; width: 38px;">Rodent Violations - Cambridge, MA</h1>
+			<h1><img src="images/map-logo.png" alt="Clipboard Logo" style="height: 38px; width: 38px;">Rodent Violations - Cambridge, MA</h1>
 		</div>
 		<div id="map"></div>
 		<div id="controls">
@@ -32,7 +32,7 @@
 
 	<script>
     	// Create Map Object
-    	var map = L.map('map',{ center: [42.38,-71.1], zoom: 13 });
+    	var map = L.map('map',{ center: [42.38, -71.1], zoom: 13 });
 
     	// Add Tile Layer from MAPC and MassGIS
 		L.tileLayer('http://tiles.mapc.org/basemap/{z}/{x}/{y}.png', {
@@ -207,9 +207,6 @@
 		};
 
 		info.addTo(map);
-
-
-
 	</script>
 </body>
 </html>
