@@ -1,60 +1,45 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Leaflet to CartoDB - Point Collection Tool Beta</title>
-    <link rel="stylesheet" href="css/leaflet.css" />
+<head>
+	<title>Advanced CartoDB</title>
+	<link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="css/leaflet.draw.css" />
     <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
-  </head>
-  <body>
-    <div id="wrapper">
-      <div id="header">
-        <h1>Leaflet Data Collection Tool</h1>
-      </div>
-      <div id="map"></div>
-      <div id="controls">
-        <p>Click points for more information, or add your own.</br></p>
-        <input type="button" onclick="startEdits()" value="Click to Start Editing">
-        <input type="button" onclick="stopEdits()" value="Stop Your Editing Session"><br>
-        <div id="credits"><p>#webMapWorkshop - &copy;2017, Mike Foster</p></div>
-      </div>
-    </div>
+</head>
+<body>
+	<!-- Set up divs -->
+	<div id="wrapper">
+		<div id="header">
+			<h1>Leaflet Data Collection Tool</h1>
+		</div>
+		<div id="map"></div>
+		<div id="controls">
+			<div id="hints">
+				<p>Click points for more information, or add your own.</p>
+			</div>
+			<button id="startEdit">Click to Start Editing</button>
+			<button id="stopEdit">Stop Your Editing Session</button>
+		</div>
+		<div id="credits">
+			<p>#DUSPviz Web Map Workshop - Jie Liu, 2017</p>
+		</div>
+	</div>
 
-<!--
-    <div id="dialog" title="Point Information">     
-      <form>
-        <fieldset style="border: none;">
-          <ul style="list-style-type: none; padding-left: 0px">
-            <li><label for="username">Your Name</label></li>
-            <li><input type="text" name="username" id="username" placeholder="Enter your name" class="text ui-widget-content ui-corner-all"></li>
-            <li><label for="description">About this Point</label></li>
-            <li><input type="text" name="description" id="description" placeholder="Description for this point" class="text ui-widget-content ui-corner-all"></li>
-          </ul>
-          <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-        </fieldset>
-      </form>
-    </div>
--->
-
-
-    <script src="js/leaflet.js"></script>
+	<!-- Reference to Leaflet and jQuery javascript libraries -->
+	<script src="js/leaflet.js"></script>
     <script src="js/leaflet.draw.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
     <script>
-    // Create Leaflet map object
-    var map = L.map('map',{ center: [42.381899, -71.122499], zoom: 13});
-
-    // Add Tile Layer basemap
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-      minZoom: 2,
-      maxZoom: 18
-    }).addTo(map);
-
-    // Your script will go here!
-   
-    </script>
-  </body>
+		// Create basemap
+		var map = L.map('map',{center:[42.381899, -71.122499], zoom: 13});
+		L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV3YmVyODQiLCJhIjoiY2ozanJsdzc3MDBmZzMycXN5a3YwdDI4cyJ9.2Bsck9PsZA2uEuuqqayH3g', {
+	      attribution: '©Mapbox ©OpenStreetMap',
+	      minZoom: 2,
+	      maxZoom: 18
+	    }).addTo(map);
+	</script>
+</body>
 </html>
