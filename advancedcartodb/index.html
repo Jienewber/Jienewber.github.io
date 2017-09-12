@@ -18,22 +18,22 @@
 			<div id="hints">
 				<p>Click points for more information, or add your own.</p>
 			</div>
-			<button id="startEdit">Click to Start Editing</button>
-			<button id="stopEdit">Stop Your Editing Session</button>
+			<button id="startEdit" onclick="startEdits()">Click to Start Editing</button>
+			<button id="stopEdit" onclick="endEdits()">Stop Your Editing Session</button>
 		</div>
 		<div id="credits">
 			<p>#DUSPviz Web Map Workshop - Jie Liu, 2017</p>
 		</div>
 	</div>
 
-	<!-- Reference to Leaflet and jQuery javascript libraries -->
+	<!-- Reference to Leaflet and jQuery javascript libraries, also add Leaflet.draw plugin -->
 	<script src="js/leaflet.js"></script>
     <script src="js/leaflet.draw.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     
     <script>
-		// Create basemap
+		// Part 1: Create basemap
 		var map = L.map('map',{center:[42.381899, -71.122499], zoom: 13});
 		L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/light-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibmV3YmVyODQiLCJhIjoiY2ozanJsdzc3MDBmZzMycXN5a3YwdDI4cyJ9.2Bsck9PsZA2uEuuqqayH3g', {
 	      attribution: '©Mapbox ©OpenStreetMap',
@@ -41,17 +41,7 @@
 	      maxZoom: 18
 	    }).addTo(map);
 
-	    // Load data from CartoDB
-	   
-
-
-	    // Add Data from CARTO using the SQL API
-		// Declare Variables
-		// Create Global Variable to hold CARTO points
-
-		
-
-		// Add Data from CARTO using the SQL API
+		// Part 2: Add Data from CartoDB using the SQL API
 		// Declare Variables
 		// Create bike icon (Notes: use ","" as separators of attributes of the icon)
 		var bikeIcon = new L.Icon({
@@ -80,11 +70,56 @@
 				}).addTo(map);
 			});
 		};
-		
+
 		// Run showAll function automatically when document loads
 		$( document ).ready(function() {
 		  getGeoJSON();
 		});
+
+		// Part 3: Implement the Leaflet.draw plugin to collect data
+		// Create Leaflet Draw Control for the draw tools and toolbox
+		var drawControl = new L.Control.Draw({
+		  draw : {
+		    polygon : false,
+		    polyline : false,
+		    rectangle : false,
+		    circle: false,
+		  },
+		  edit : false,
+		  remove: false
+		});
+
+		// Boolean global variable used to control visiblity
+		var controlOnMap = false;
+
+		// Create variable for Leaflet.draw features
+		var drawnItems = new L.FeatureGroup();
+
+		function startEdits() {
+			if(controlOnMap == true){
+			    map.removeControl(drawControl);
+			    controlOnMap = false;
+			}
+			map.addControl(drawControl);
+			controlOnMap = true;
+		};
+
+		function endEdits() {
+			map.removeControl(drawControl);
+			controlOnMap = false;
+		};
+
+		// Function to run when feature is drawn on map: When a feature is created on the map, a layer on which it sits is also created. This function listens for when a feature is created, then takes that event, sets the layer of the event to a variable called layer, then it adds that layer to the drawnItems feature group, then adds drawnItems to the map.
+		map.on('draw:created', function (e) {
+		  var layer = e.layer;
+		  drawnItems.addLayer(layer);
+		  map.addLayer(drawnItems);
+		  dialog.dialog("open");
+		});
+
+
+		
+
 
 
 
