@@ -78,15 +78,18 @@
 
 		// Part 3: Implement the Leaflet.draw plugin to collect data
 		// Create Leaflet Draw Control for the draw tools and toolbox
-		var drawControl = new L.Control.Draw({
-		  draw : {
-		    polygon : false,
-		    polyline : false,
-		    rectangle : false,
-		    circle: false,
-		  },
-		  edit : false,
-		  remove: false
+	    var drawControl = new L.Control.Draw({
+		  	draw: {
+		  		marker: {
+					icon: bikeIcon // Customize the marker
+				},
+			    polygon : false,   // Turns off this drawing tool
+			    polyline : false,  // Turns off this drawing tool
+			    rectangle : false, // Turns off this drawing tool
+			    circle: false,     // Turns off this drawing tool
+			  },
+		  	edit : false,
+		  	remove: false
 		});
 
 		// Boolean global variable used to control visiblity
@@ -100,7 +103,8 @@
 			    map.removeControl(drawControl);
 			    controlOnMap = false;
 			}
-			map.addControl(drawControl);
+			// map.addControl(drawControl);
+			drawControl.addTo(map);
 			controlOnMap = true;
 		};
 
@@ -111,14 +115,21 @@
 
 		// Function to run when feature is drawn on map: When a feature is created on the map, a layer on which it sits is also created. This function listens for when a feature is created, then takes that event, sets the layer of the event to a variable called layer, then it adds that layer to the drawnItems feature group, then adds drawnItems to the map.
 		map.on('draw:created', function (e) {
-		  var layer = e.layer;
-		  drawnItems.addLayer(layer);
-		  map.addLayer(drawnItems);
-		  dialog.dialog("open");
+			var type = e.layerType, layer = e.layer;
+			if (type == 'marker') {
+				layer.bindPopup('A popup!'); // Initialize the popup
+			}
+		  	drawnItems.addLayer(layer);
+
+		  	map.addLayer(drawnItems);
+		  	dialog.dialog("open");
 		});
 
+		// Part 4: Add dialog for adding attributes for new markers
 
-		
+
+
+
 
 
 
