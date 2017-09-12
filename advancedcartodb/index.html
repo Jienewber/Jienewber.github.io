@@ -40,6 +40,56 @@
 	      minZoom: 2,
 	      maxZoom: 18
 	    }).addTo(map);
+
+	    // Load data from CartoDB
+	   
+
+
+	    // Add Data from CARTO using the SQL API
+		// Declare Variables
+		// Create Global Variable to hold CARTO points
+
+		
+
+		// Add Data from CARTO using the SQL API
+		// Declare Variables
+		// Create bike icon (Notes: use ","" as separators of attributes of the icon)
+		var bikeIcon = new L.Icon({
+            iconUrl:'images/bicycle-15.svg',
+    		iconSize:[25, 25]
+        });
+		// Create Global Variable to hold CARTO points
+		var cartoDBPoints = null;
+
+		// Set your CARTO Username
+		var cartoDBusername = "jienewber";
+
+		// Write SQL Selection Query to be Used on CARTO Table
+		// Name of table is 'data_collector'
+		var sqlQuery = "SELECT * FROM data_collector";
+
+		// Get CARTO selection as GeoJSON and Add to Map
+		function getGeoJSON() {
+			$.getJSON("https://"+cartoDBusername+".cartodb.com/api/v2/sql?format=GeoJSON&q="+sqlQuery, function(data) {
+				cartoDBPoints = L.geoJson(data, {
+					pointToLayer: function(feature, latlng) {
+						var marker = L.marker(latlng, {icon: bikeIcon});
+						marker.bindPopup('<h2>' + feature.properties.description + '</h2><p>Submitted by ' + feature.properties.name + '</p>');
+						return marker;
+					}
+				}).addTo(map);
+			});
+		};
+		
+		// Run showAll function automatically when document loads
+		$( document ).ready(function() {
+		  getGeoJSON();
+		});
+
+
+
+
+
 	</script>
 </body>
 </html>
