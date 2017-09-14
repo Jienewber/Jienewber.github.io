@@ -6,22 +6,49 @@
 </head>
 <body>
 	<div>Hello World!</div>
-	<svg width = "720" height = "120"></svg>
+	<svg width = "720" height = "120">
+	</svg>
 
 	<script>
+		// Set up the stage
 		var stage = d3.selectAll("svg");
 		stage.attr("class", "graf");
 		stage.style("background-color", "lightgrey");
-		var greybackground = true;
 
+		var myRects = stage.selectAll("rect").data([160, 220, 280, 340]);
+		myRects.enter()
+			.append("rect")
+			.attr("x", function(d) {return d;})
+			.attr("y", 45)
+			.attr("height", 30)
+			.attr("width", 30);
+
+		// Add a transition when stage element is clicked
 		stage.on("click", function() {
-			if (greybackground) {
-				stage.style("background-color", "red");
-				greybackground = false;
+			var position = d3.select(this).attr("class");
+			if (position == null) {
+				d3.selectAll("rect")
+					.transition() // to visualize the move, otherwise will only show the two static views 
+					.attr("fill", "firebrick")
+					.attr("x", function(d){return d + 200;})
+					.ease(d3.easeLinear); // define the speed variance of the movement
+				stage.attr("class", "moved");
 			} else {
-				stage.style("background-color", "lightgrey");
-				greybackground = true;
+				d3.selectAll("rect")
+					.transition()
+					.attr("fill", "black")
+					.attr("x", function(d){return d;}) // move back
+					.ease(d3.easeLinear); 
+				stage.attr("class", null);
 			}
+		});
+
+		// Use a dataset with fewer values through Remove
+		var dataRemove = stage.selectAll("rect").data([160, 220]);
+
+		// Remove values on click
+		d3.selectAll("rect").on("click", function() {
+			dataRemove.exit().remove();
 		});
 
 	</script>
