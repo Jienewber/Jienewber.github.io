@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
 	<title>1.2 Barchart</title>
-	<!-- Load D3js library -->
+	<!-- Load D3js library and d3.tip library -->
 	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+	<script src="js/d3-tip-index.js"></script>
 	<!-- Load CSS files -->
 	<link href="css/customize.css" rel="stylesheet">
 </head>
 <body>
+	<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
 	<script>
 		
 		// var ratData = [40, 70, 60, 120, 40, 95, 60, 90, 100, 30, 50, 40];
@@ -50,14 +52,15 @@
 				.attr("height", svgHeight)
 				.attr("fill", svgFill);
 
-			// Create Tooltip and set it to be hidden	
-			var tooltip = d3.select("body")
-				.append("div")
-				.style("position", "absolute")
-				.style("font-family", "'Open Sans', sans-serif")
-				.style("font-size", "12px")
-				.style("z-index", "10")
-				.style("visibility", "hidden");
+			// Create Tooltip and set text to it	
+			var tip = d3.tip()
+				.attr('class', 'd3-tip')
+			  	.offset([-10, 0])
+			  	.html(function(d) {
+			    	return ""+ d.city + ": " + d.rats + "";
+			});
+
+			svg.call(tip);
 
 			svg.selectAll("rect")
 				.data(ratData)
@@ -71,13 +74,8 @@
 				.on("mouseover", function(d){
 					return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
 				})
-				.on("mousemove", function(d){
-					return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
-				}) // d3.event.pageX / d3.event.pageY is the current mouse coordinate.
-				// Notes: separate those two mouseovers, so that the label could move along with the mouse, otherwise it will stick to the original location until you move the mouse out and over again.
-				.on("mouseout", function(d){
-					return tooltip.style("visibility", "hidden");
-				});
+				.on("mousemove", tip.show)
+				.on("mouseout", tip.hide);
 
 			// Add y-axis and x-axis
 			svg.append("line")
