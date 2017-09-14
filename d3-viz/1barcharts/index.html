@@ -69,7 +69,8 @@
 				.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
 				.attr("fill", rectFill)
 				.on("mouseover", function(d){
-					return tooltip.style("visibility", "visible");
+					return tooltip.style("visibility", "visible")
+					.text(d.city + ": " + d.rats);
 				})
 				.on("mouseover", function(d){
 					return tooltip.style("top", (event.pageY-10)+"px")
