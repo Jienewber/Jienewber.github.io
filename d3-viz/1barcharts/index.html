@@ -69,10 +69,7 @@
 				.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
 				.attr("fill", rectFill)
 				.on("mouseover", function(d){
-					return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
-				})
-				.on("mousemove", function(d){
-					return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
+					return tooltip.style("visibility", "visible").style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
 				})
 				.on("mouseout", function(d){
 					return tooltip.style("visibility", "hidden");
