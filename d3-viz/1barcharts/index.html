@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>1.2 Barchart</title>
+	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+</head>
+<body>
+	<script>
+		var ratData = [40, 90, 30, 60];
+		var svgWidth = 150;
+		var svgHeight = 175;
+		var svgFill = "lightgrey";
+
+		var rectX = 30;
+		var rectY = 0;
+		var rectWidth = 20;
+		var rectFill = "maroon";
+
+		var svg = d3.select("body")
+			.append("svg")  // The append() method creates a new element as a child of each element in the current selection
+			.attr("width", svgWidth)
+			.attr("height", svgHeight)
+			.attr("fill", svgFill);
+
+		svg.selectAll("rect")
+			.data(ratData)
+			.enter()
+			.append("rect")
+			.attr("x", function(d, i) {return i * 25 + 5;}) 
+			.attr("y", rectY)
+			.attr("width", rectWidth)
+			.attr("height", function(d) {return d;})
+			.attr("fill", rectFill);
+
+		
+
+	</script>
+
+</body>
+</html>

@@ -1,11 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>1 Barchart</title>
+	<title>1.1 Barchart</title>
+	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
 </head>
 <body>
-	<div> Hellow barchart!
+	<div> <p>Hello <b>barchart</b>! This is a test of <b>d3.selectAll</b> and <b>d3.select</b>.</p>
 	</div>
+	<svg width="160" height="180">
+		<rect x="30"></rect>
+		<rect x="55"></rect>
+		<rect x="80"></rect>
+		<rect x="105"></rect>
+	</svg>
+
+	<script>
+		// Set up the paragraph style and interaction
+		var boldWord = d3.selectAll("p").selectAll("b");
+		boldWord.on("click", function(){
+			d3.select(this).style("color", "red");
+		});
+
+		// Set up the stage and barchart
+		var stage = d3.selectAll("svg");
+		stage.attr("class", "graf");
+		stage.style("background-color", "lightgrey");
+
+		var ratData =[40, 90, 30, 60];
+		var myBars = d3.selectAll("rect");
+
+		myBars.data(ratData)
+			.attr("fill", "steelblue")
+			.attr("width", 20)
+			.attr("height", function(d) {return d;});
+
+	</script>
+
 
 </body>
 </html>
