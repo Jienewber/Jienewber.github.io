@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D3 Viz</title>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+	<div>Hello World!</div>
+	<svg width = "720" height = "120"></svg>
+
+	<script>
+		var stage = d3.selectAll("svg");
+		stage.attr("class", "graf");
+		stage.style("background-color", "lightgrey");
+		var greybackground = true;
+
+		stage.on("click", function() {
+			if (greybackground) {
+				stage.style("background-color", "red");
+				greybackground = false;
+			} else {
+				stage.style("background-color", "lightgrey");
+				greybackground = true;
+			}
+		});
+
+	</script>
+
+</body>
+</html>

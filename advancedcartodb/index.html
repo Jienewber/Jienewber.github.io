@@ -26,6 +26,20 @@
 		</div>
 	</div>
 
+    <div id="dialog" title="Point Information">     
+      <form>
+        <fieldset style="border: none;">
+          <ul style="list-style-type: none; padding-left: 0px">
+            <li><label for="username">Your Name</label></li>
+            <li><input type="text" name="username" id="username" placeholder="Enter your name" class="text ui-widget-content ui-corner-all"></li>
+            <li><label for="description">About this Point</label></li>
+            <li><input type="text" name="description" id="description" placeholder="Description for this point" class="text ui-widget-content ui-corner-all"></li>
+          </ul>
+          <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+        </fieldset>
+      </form>
+    </div>
+
 	<!-- Reference to Leaflet and jQuery javascript libraries, also add Leaflet.draw plugin -->
 	<script src="js/leaflet.js"></script>
     <script src="js/leaflet.draw.js"></script>
@@ -94,6 +108,7 @@
 
 		// Boolean global variable used to control visiblity
 		var controlOnMap = false;
+		var dialog = null;
 
 		// Create variable for Leaflet.draw features
 		var drawnItems = new L.FeatureGroup();
@@ -126,6 +141,52 @@
 		});
 
 		// Part 4: Add dialog for adding attributes for new markers
+		// Use the jQuery UI dialog to create a dialog and set options
+		dialog = $("#dialog").dialog({
+			autoOpen: false,
+			height: 300,
+			width: 350,
+			modal: true,
+			position: {
+		    	my: "center center",
+		    	at: "center center",
+		    	of: "#map"
+		  	},
+		  	buttons: {
+		    	"Add to Database": setData,
+		    	Cancel: function() {
+		      		dialog.dialog("close");
+		      	map.removeLayer(drawnItems);
+		    	}
+		  	},
+		  	close: function() {
+		    	form[ 0 ].reset();
+		    	console.log("Dialog closed");
+		  	}
+			});
+
+		// Stops default form submission and ensures that setData or the cancel function run
+		var form = dialog.find("form").on("submit", function(event) {
+		  	event.preventDefault();
+		});
+
+		// Add setData() function to use SQL to insert a new line of data to our database
+		function setData() {
+		    var enteredUsername = username.value;
+		    var enteredDescription = description.value;
+		    drawnItems.eachLayer(function (layer) {
+		        var sql = "INSERT INTO data_collector (the_geom, description, name, latitude, longitude) VALUES (ST_SetSRID(ST_GeomFromGeoJSON('";
+		        var a = layer.getLatLng();
+		        var sql2 ='{"type":"Point","coordinates":[' + a.lng + "," + a.lat + "]}'),4326),'" + enteredDescription + "','" + enteredUsername + "','" + a.lat + "','" + a.lng +"')";
+		        var pURL = sql+sql2;
+		        submitToProxy(pURL);
+		        console.log("Feature has been submitted to the Proxy");
+		    });
+		    map.removeLayer(drawnItems);
+		    drawnItems = new L.FeatureGroup();
+		    console.log("drawnItems has been cleared");
+		    dialog.dialog("close");
+		};
 
 
 
