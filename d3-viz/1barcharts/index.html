@@ -13,6 +13,8 @@
 		// var ratData = [40, 70, 60, 120, 40, 95, 60, 90, 100, 30, 50, 40];
 		var ratData = [];
 
+
+		// Load data from csv file
 		d3.csv("data/rat-data.csv", function(d) {
 			return {
 				city : d.city, // city name
@@ -24,14 +26,15 @@
 			createVisualization(); // call function to create chart
 		});
 
-		// Use scale(domain, range) to automatically change the size of the bars to fit into the size of the datad
+
 
 		function createVisualization() {
 			var dataLength = ratData.length;
-			alert("the length of the dataset is" + ratData.length);
+			alert("Successfully loaded data from CSV. The length of the dataset is: " + ratData.length);
 			var maxValue = d3.max(ratData, function(d) {return +d.rats;});
 			var x_axislength = 100;
 			var y_axislength = 100;
+
 			var yScale = d3.scaleLinear()
 				.domain([0, maxValue])
 				.range([0, y_axislength]);
@@ -47,6 +50,15 @@
 				.attr("height", svgHeight)
 				.attr("fill", svgFill);
 
+			// Create Tooltip and set it to be hidden	
+			var tooltip = d3.select("body")
+				.append("div")
+				.style("position", "absolute")
+				.style("font-family", "'Open Sans', sans-serif")
+				.style("font-size", "12px")
+				.style("z-index", "10")
+				.style("visibility", "hidden");
+
 			svg.selectAll("rect")
 				.data(ratData)
 				.enter()
@@ -55,7 +67,16 @@
 				.attr("y", function(d) { return svgHeight - yScale(+d.rats);}) // Set y coordinate of rect using the y scale
 				.attr("width", x_axislength / dataLength - 2) // Set bar width using length of array, leave gap of 2px between rect
 				.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
-				.attr("fill", rectFill);
+				.attr("fill", rectFill)
+				.on("mouseover", function(d){
+					return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
+				})
+				.on("mousemove", function(d){
+					return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
+				})
+				.on("mouseout", function(d){
+					return tooltip.style("visibility", "hidden");
+				});
 
 			// Add y-axis and x-axis
 			svg.append("line")
@@ -81,6 +102,8 @@
 				.text("No. of Rats")
 				.attr("fill", "black")
 				.attr("transform", "translate(20, 85) rotate(-90)");
+
+			
 		}
 		
 
