@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>D3 Viz</title>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+</head>
+<body>
+	<div>Hello World!</div>
+	<svg width = "720" height = "120">
+	</svg>
+
+	<script>
+		// Set up the stage
+		var stage = d3.selectAll("svg");
+		stage.attr("class", "graf");
+		stage.style("background-color", "lightgrey");
+
+		var myCircles = stage.selectAll("circle").data([160, 220, 280, 340]);
+		myCircles.enter()
+			.append("circle")
+			.attr("cx", function(d) {return d;})
+			.attr("cy", 60)
+			.attr("r", 15);
+
+		// Add a transition when stage element is clicked
+		stage.on("click", function() {
+			var position = d3.select(this).attr("class");
+			if (position == null) {
+				d3.selectAll("circle")
+					.transition() // to visualize the move, otherwise will only show the two static views 
+					.attr("fill", "firebrick")
+					.attr("cx", function(d){return d + 200;})
+					.ease(d3.easeLinear); // define the speed variance of the movement
+				stage.attr("class", "moved");
+			} else {
+				d3.selectAll("circle")
+					.transition()
+					.attr("fill", "black")
+					.attr("cx", function(d){return d;}) // move back
+					.ease(d3.easeLinear); 
+				stage.attr("class", null);
+			}
+		});
+
+		// Use a dataset with fewer values through Remove
+		var dataRemove = stage.selectAll("circle").data([160, 220]);
+
+		// Remove values on click
+		d3.selectAll("circle").on("click", function() {
+			dataRemove.exit().remove();
+		});
+
+	</script>
+
+</body>
+</html>
