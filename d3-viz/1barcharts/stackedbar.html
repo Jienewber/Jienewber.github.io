@@ -12,7 +12,7 @@
 	<script src="js/d3-tip-index.js"></script>
 	<script>
 		var svgWidth = 300,
-			svgHeight = 175,
+			svgHeight = 300,
 			margin = {top: 20, right: 20, bottom: 30, left: 40},
 			width = svgWidth - margin.left - margin.right,
 			height = svgHeight - margin.top - margin.bottom,
@@ -72,8 +72,7 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
-			  		alert(d.data.city + "<br>" + d[0].key + "<br>" + d[1].key + "<br>" + d[0] + "<br>" + d[1]);
-			    	return "" + d.data.city + " " + d.data.key + ": <span style='color:orange'>" + amount + "</span>";
+			    	return "" + d.data.city + " " + d.data[key] + ": <span style='color:orange'>" + amount + "</span>";
 			});
 
 			svg.call(tip);
