@@ -28,10 +28,12 @@
   left: 0;
 }
 
+/* Set the default bar color */
 .bar {
-  fill: maroon;
+  fill: grey;
 }
 
+/* Change the color of the bar when hover over */
 .bar:hover {
-  fill: orangered;
+  fill: orange;
 }

@@ -29,10 +29,8 @@
 		});
 
 
-
 		function createVisualization() {
 			var dataLength = ratData.length;
-			alert("Successfully loaded data from CSV. The length of the dataset is: " + ratData.length);
 			var maxValue = d3.max(ratData, function(d) {return +d.rats;});
 			var x_axislength = 100;
 			var y_axislength = 100;
