@@ -72,6 +72,7 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
+			  		alert(d.data + "<br>" + d.data.city + "<br>" + d.data.keys + "<br>" + d[0] + "<br>" + d[1]);
 			    	return "" + d.data.city + " " + d.data.key + ": <span style='color:orange'>" + amount + "</span>";
 			});
 
@@ -108,7 +109,7 @@
 		        .attr("fill", "#000")
 		        .attr("font-weight", "bold")
 		        .attr("text-anchor", "start")
-		        .text("Amount of Rats/Suirrels");
+		        .text("Amount");
 
 		    var legend = g.append("g")
 		        .attr("font-family", "sans-serif")
