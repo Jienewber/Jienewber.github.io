@@ -86,7 +86,7 @@
 		      .data(function(d) { return d; })
 		      .enter().append("rect")
 		      .attr("class", "bar")
-		      .attr("x", function(d) { return x(d.data.city) + 1; }) // move to right a little bit
+		      .attr("x", function(d) { return x(d.data.city); })
 		      .attr("y", function(d) { return y(d[1]); })
 		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
 		      .attr("width", x.bandwidth())
