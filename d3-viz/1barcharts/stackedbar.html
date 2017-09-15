@@ -32,23 +32,32 @@
 
 		var z = d3.scaleOrdinal()
 		    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
-		var stack = d3.stack()
-			.keys(["rats", "squirrels"]) // set the keys for the data
-			.order(d3.stackOrderNone)
-			.offset(d3.stackOffsetNone); 
+
+		// var stack = d3.stack()
+		// 	.keys(["rats", "squirrels"]) // set the keys for the data
+		// 	.order(d3.stackOrderNone)
+		// 	.offset(d3.stackOffsetNone); 
 
 		var series = null;
+		var totals = [];
 
 		d3.csv("data/rat-squirrel-data.csv", function(d, i, columns) {
+			// this is a very good way to handle large csv data without knowing much about how many columns are there, also generate the total value
 		    for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
 		    d.total = t;
 		    return d;
 		}, function(error, data) {
 		    if (error) throw error;
 		    console.log(data);
+		    var stack = d3.stack()
+				.keys(data.columns.slice(1)) // set the keys for the data
+				.order(d3.stackOrderNone) // set ordering properties, try d3.stackOrderAscending
+				.offset(d3.stackOffsetNone); // set offset properties
 		    series = stack(data); // use the stack function
+			totals = data.total;
 		    console.log(series);
-			createVisualization(); // call function to create chart
+		    console.log("totals = " + totals);
+			//createVisualization(); // call function to create chart
 		});
 		
 
