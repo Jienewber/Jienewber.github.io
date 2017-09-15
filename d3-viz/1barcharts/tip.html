@@ -61,10 +61,11 @@
 
 			svg.call(tip);
 
-			svg.selectAll("rect")
+			svg.selectAll(".bar")
 				.data(ratData)
 				.enter()
 				.append("rect")
+				.attr("class", "bar")
 				.attr("x", function(d, i) {return i * (x_axislength / dataLength) + 30;}) // Set x coord of rect using length of array, start from (30,y)
 				.attr("y", function(d) { return svgHeight - yScale(+d.rats);}) // Set y coordinate of rect using the y scale
 				.attr("width", x_axislength / dataLength - 2) // Set bar width using length of array, leave gap of 2px between rect

@@ -28,10 +28,10 @@
   left: 0;
 }
 
-.rect {
+.bar {
   fill: maroon;
 }
 
-.rect: hover {
+.bar: hover {
   fill: orange;
 }
