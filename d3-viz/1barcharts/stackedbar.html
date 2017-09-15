@@ -72,7 +72,7 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
-			  		alert(d.data + "<br>" + d.data.city + "<br>" + d.data.keys + "<br>" + d[0] + "<br>" + d[1]);
+			  		alert(d.data.city + "<br>" + d[0].key + "<br>" + d[1].key + "<br>" + d[0] + "<br>" + d[1]);
 			    	return "" + d.data.city + " " + d.data.key + ": <span style='color:orange'>" + amount + "</span>";
 			});
 
@@ -116,7 +116,7 @@
 		        .attr("font-size", 10)
 		        .attr("text-anchor", "end")
 		        .selectAll("g")
-		        .data(["squirrels", "rats"])
+		        .data(["rabbits", "squirrels", "rats"])
 		        .enter().append("g")
 		        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
