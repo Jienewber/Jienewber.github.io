@@ -32,6 +32,6 @@
   fill: maroon;
 }
 
-.rect {
+.rect: hover {
   fill: orange;
 }
