@@ -33,14 +33,10 @@
 		var z = d3.scaleOrdinal()
 		    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 
-		// var stack = d3.stack()
-		// 	.keys(["rats", "squirrels"]) // set the keys for the data
-		// 	.order(d3.stackOrderNone)
-		// 	.offset(d3.stackOffsetNone); 
-
+		// Load data from csv AND generate the series (stacked dataset / nested arrays)
+		var ratData = null;
 		var series = null;
-		var totals = [];
-
+		
 		d3.csv("data/rat-squirrel-data.csv", function(d, i, columns) {
 			// this is a very good way to handle large csv data without knowing much about how many columns are there, also generate the total value
 		    for (i = 1, t = 0; i < columns.length; ++i) t += d[columns[i]] = +d[columns[i]];
@@ -48,87 +44,93 @@
 		    return d;
 		}, function(error, data) {
 		    if (error) throw error;
-		    console.log(data);
+
+		    ratData = data;
+		    console.log(ratData);
+
 		    var stack = d3.stack()
-				.keys(data.columns.slice(1)) // set the keys for the data
+				.keys(data.columns.slice(1)) // set the keys for the data, keys will exclude the city column
 				.order(d3.stackOrderNone) // set ordering properties, try d3.stackOrderAscending
 				.offset(d3.stackOffsetNone); // set offset properties
-		    series = stack(data); // use the stack function
-			totals = data.total;
-		    console.log(series);
-		    console.log("totals = " + totals);
-			//createVisualization(); // call function to create chart
+			
+			series = stack(ratData); // use the stack function
+			console.log(series); // problem here is lost the total value, but it may be not necessary since the larger number of the last values are the totals
+			
+			createVisualization(ratData); // call function to create chart
 		});
+
 		
 
-		// function createVisualization() {
-		// 	var dataLength = ratData.length;
-		// 	var maxValue = d3.max(ratData, function(d) {return +d.rats;});
-		// 	var x_axislength = 100;
-		// 	var y_axislength = 100;
+		function createVisualization(data) {
+			data.sort(function(a, b) { return b.total - a.total; });
+		    x.domain(data.map(function(d) { return d.city; }));
+		    y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
+		    z.domain(keys);
 
-		// 	var yScale = d3.scaleLinear()
-		// 		.domain([0, maxValue])
-		// 		.range([0, y_axislength]);
+		    // Create Tooltip and set text to it	
+			var tip = d3.tip()
+				.attr('class', 'd3-tip')
+			  	.offset([-10, 0])
+			  	.html(function(d) {
+			    	return "" + d.city + series.keys + ": <span style='color:orange'>" + series.value + "</span>";
+			});
 
+			svg.call(tip);
+
+		    g.append("g")
+		      .selectAll("g")
+		      .data(series)
+		      .enter().append("g")
+		      .attr("fill", function(d) { return z(d.key); })
+		      .selectAll("rect")
+		      .data(function(d) { return d; })
+		      .enter().append("rect")
+		      .attr("x", function(d) { return x(d.data.city); })
+		      .attr("y", function(d) { return y(d[1]); })
+		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
+		      .attr("width", x.bandwidth())
+		      .on("mousemove", tip.show)
+		      .on("mouseout", tip.hide);
+
+		    g.append("g")
+		        .attr("class", "axis")
+		        .attr("transform", "translate(0," + height + ")")
+		        .call(d3.axisBottom(x));
+
+		    g.append("g")
+		        .attr("class", "axis")
+		        .call(d3.axisLeft(y).ticks(null, "s"))
+		        .append("text")
+		        .attr("x", 2)
+		        .attr("y", y(y.ticks().pop()) + 0.5)
+		        .attr("dy", "0.32em")
+		        .attr("fill", "#000")
+		        .attr("font-weight", "bold")
+		        .attr("text-anchor", "start")
+		        .text("Amount of Rats/Suirrels");
+
+		    var legend = g.append("g")
+		        .attr("font-family", "sans-serif")
+		        .attr("font-size", 10)
+		        .attr("text-anchor", "end")
+		        .selectAll("g")
+		        .data(keys.slice().reverse())
+		        .enter().append("g")
+		        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+		    legend.append("rect")
+		        .attr("x", width - 19)
+		        .attr("width", 19)
+		        .attr("height", 19)
+		        .attr("fill", z);
+
+		    legend.append("text")
+		        .attr("x", width - 24)
+		        .attr("y", 9.5)
+		        .attr("dy", "0.32em")
+		        .text(function(d) { return d; });
 			
-		// 	var svgFill = "silver";
-
-		// 	var svg = d3.select("body")
-		// 		.append("svg")  // The append() method creates a new element as a child of each element in the current selection
-		// 		.attr("width", svgWidth)
-		// 		.attr("height", svgHeight)
-		// 		.attr("fill", svgFill);
-
-		// 	// Create Tooltip and set text to it	
-		// 	var tip = d3.tip()
-		// 		.attr('class', 'd3-tip')
-		// 	  	.offset([-10, 0])
-		// 	  	.html(function(d) {
-		// 	    	return "" + d.city + ": <span style='color:orange'>" + d.rats + "</span>";
-		// 	});
-
-		// 	svg.call(tip);
-
-		// 	svg.selectAll(".bar")
-		// 		.data(ratData)
-		// 		.enter()
-		// 		.append("rect")
-		// 		.attr("class", "bar")
-		// 		.attr("x", function(d, i) {return i * (x_axislength / dataLength) + 30;}) // Set x coord of rect using length of array, start from (30,y)
-		// 		.attr("y", function(d) { return svgHeight - yScale(+d.rats);}) // Set y coordinate of rect using the y scale
-		// 		.attr("width", x_axislength / dataLength - 2) // Set bar width using length of array, leave gap of 2px between rect
-		// 		.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
-		// 		.on("mousemove", tip.show)
-		// 		.on("mouseout", tip.hide);
-
-		// 	// Add y-axis and x-axis
-		// 	svg.append("line")
-		// 		.attr("x1", 30)
-		// 		.attr("y1", 60)
-		// 		.attr("x2", 30)
-		// 		.attr("y2", 175)
-		// 		.attr("stroke-width", 2)
-		// 		.attr("stroke", "black");
-
-		// 	svg.append("line")
-		// 		.attr("x1", 30)
-		// 		.attr("y1", 175)
-		// 		.attr("x2", 140)
-		// 		.attr("y2", 175)
-		// 		.attr("stroke-width", 4)
-		// 		.attr("stroke", "black");
-
-		// 	// Add y-label
-		// 	svg.append("text")
-		// 		.attr("class", "y label")
-		// 		.attr("text-anchor", "end")
-		// 		.text("No. of Rats")
-		// 		.attr("fill", "black")
-		// 		.attr("transform", "translate(20, 85) rotate(-90)");
-
-			
-		// }
+		}
 	</script>
 
 </body>
