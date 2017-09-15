@@ -24,7 +24,7 @@
 
 		var x = d3.scaleBand()
 		    .rangeRound([0, width])
-		    .paddingInner(0.05)
+		    .paddingInner(0.2)
 		    .align(0.1);
 
 		var y = d3.scaleLinear()
@@ -71,7 +71,6 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
-			  		alert("d[key]:" + d[key]);
 			    	return "" + d.data.city + ": <span style='color:orange'>" + amount + "</span>"; // Still want to figure out how to add the keys to the tip, have tried d.key, d.keys, d.data.keys, d.data.key, d[key], all failed
 			});
 
