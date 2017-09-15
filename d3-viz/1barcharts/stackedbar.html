@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>1.3 Stacked Bar</title>
+	<!-- Load D3js library and d3.tip library -->
+	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+	<!-- Load CSS files -->
+	<link href="css/customize.css" rel="stylesheet">
+	<link href="css/customize-tip.css" rel="stylesheet">
+</head>
+<body>
+	<script src="js/d3-tip-index.js"></script>
+	<script>
+		
+		// var ratData = [40, 70, 60, 120, 40, 95, 60, 90, 100, 30, 50, 40];
+		var ratData = [];
+
+
+		// Load data from csv file
+		d3.csv("data/rat-data.csv", function(d) {
+			return {
+				city : d.city, // city name
+				rats : +d.rats // force value of rats to be number (+)
+			};
+		}, function(error, rows) { // catch error if error, read rows
+			ratData = rows; // set ratData equal to rows
+			console.log(ratData);
+			createVisualization(); // call function to create chart
+		});
+
+
+		function createVisualization() {
+			var dataLength = ratData.length;
+			var maxValue = d3.max(ratData, function(d) {return +d.rats;});
+			var x_axislength = 100;
+			var y_axislength = 100;
+
+			var yScale = d3.scaleLinear()
+				.domain([0, maxValue])
+				.range([0, y_axislength]);
+
+			var svgWidth = 150;
+			var svgHeight = 175;
+			var svgFill = "silver";
+
+			var svg = d3.select("body")
+				.append("svg")  // The append() method creates a new element as a child of each element in the current selection
+				.attr("width", svgWidth)
+				.attr("height", svgHeight)
+				.attr("fill", svgFill);
+
+			// Create Tooltip and set text to it	
+			var tip = d3.tip()
+				.attr('class', 'd3-tip')
+			  	.offset([-10, 0])
+			  	.html(function(d) {
+			    	return "" + d.city + ": <span style='color:orange'>" + d.rats + "</span>";
+			});
+
+			svg.call(tip);
+
+			svg.selectAll(".bar")
+				.data(ratData)
+				.enter()
+				.append("rect")
+				.attr("class", "bar")
+				.attr("x", function(d, i) {return i * (x_axislength / dataLength) + 30;}) // Set x coord of rect using length of array, start from (30,y)
+				.attr("y", function(d) { return svgHeight - yScale(+d.rats);}) // Set y coordinate of rect using the y scale
+				.attr("width", x_axislength / dataLength - 2) // Set bar width using length of array, leave gap of 2px between rect
+				.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
+				.on("mousemove", tip.show)
+				.on("mouseout", tip.hide);
+
+			// Add y-axis and x-axis
+			svg.append("line")
+				.attr("x1", 30)
+				.attr("y1", 60)
+				.attr("x2", 30)
+				.attr("y2", 175)
+				.attr("stroke-width", 2)
+				.attr("stroke", "black");
+
+			svg.append("line")
+				.attr("x1", 30)
+				.attr("y1", 175)
+				.attr("x2", 140)
+				.attr("y2", 175)
+				.attr("stroke-width", 4)
+				.attr("stroke", "black");
+
+			// Add y-label
+			svg.append("text")
+				.attr("class", "y label")
+				.attr("text-anchor", "end")
+				.text("No. of Rats")
+				.attr("fill", "black")
+				.attr("transform", "translate(20, 85) rotate(-90)");
+
+			
+		}
+	</script>
+
+</body>
+</html>
