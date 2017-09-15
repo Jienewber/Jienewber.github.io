@@ -24,8 +24,8 @@
 
 		var x = d3.scaleBand()
 		    .rangeRound([0, width])
-		    .paddingInner(0.2)
-		    .align(0.1);
+		    .paddingInner(0.2) // Gap between the bars
+		    .align(0.3);
 
 		var y = d3.scaleLinear()
 		    .rangeRound([height, 0]);
