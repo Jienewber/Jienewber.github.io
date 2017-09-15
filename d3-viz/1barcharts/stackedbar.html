@@ -72,7 +72,7 @@
 				.attr('class', 'd3-tip')
 			  	.offset([-10, 0])
 			  	.html(function(d) {
-			    	return "" + d.data.city + d.data.key + ": <span style='color:orange'>" + d.value(d.data.key) + "</span>";
+			    	return "" + d.data.city + d.data.key + ": <span style='color:orange'>" + d.data.value(d.data.key) + "</span>";
 			});
 
 			svg.call(tip);
