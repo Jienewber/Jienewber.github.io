@@ -55,10 +55,6 @@
 			
 			series = stack(ratData); // use the stack function
 			console.log(series); // problem here is lost the total value, but it may be not necessary since the larger number of the last values are the totals
-			console.log(series.keys);
-			console.log(series[0]);
-			console.log(series[1]);
-			
 			createVisualization(ratData); // call function to create chart
 		});
 
@@ -76,7 +72,7 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
-			    	return "" + d.data.city + " " + d.key + ": <span style='color:orange'>" + amount + "</span>";
+			    	return "" + d.data.city + " " + d.data.key + ": <span style='color:orange'>" + amount + "</span>";
 			});
 
 			svg.call(tip);
@@ -86,10 +82,11 @@
 		      .data(series)
 		      .enter().append("g")
 		      .attr("fill", function(d) { return z(d.key); })
-		      .selectAll("rect")
+		      .selectAll(".bar")
 		      .data(function(d) { return d; })
 		      .enter().append("rect")
-		      .attr("x", function(d) { return x(d.data.city); })
+		      .attr("class", "bar")
+		      .attr("x", function(d) { return x(d.data.city) + 1; }) // move to right a little bit
 		      .attr("y", function(d) { return y(d[1]); })
 		      .attr("height", function(d) { return y(d[0]) - y(d[1]); })
 		      .attr("width", x.bandwidth())
