@@ -44,7 +44,6 @@
 			var svgWidth = 150;
 			var svgHeight = 175;
 			var svgFill = "silver";
-			var rectFill = "maroon";
 
 			var svg = d3.select("body")
 				.append("svg")  // The append() method creates a new element as a child of each element in the current selection
@@ -57,7 +56,7 @@
 				.attr('class', 'd3-tip')
 			  	.offset([-10, 0])
 			  	.html(function(d) {
-			    	return "" + d.city + ": <span style='color:red'>" + d.rats + "</span>";
+			    	return "" + d.city + ": <span style='color:orange'>" + d.rats + "</span>";
 			});
 
 			svg.call(tip);
@@ -70,7 +69,6 @@
 				.attr("y", function(d) { return svgHeight - yScale(+d.rats);}) // Set y coordinate of rect using the y scale
 				.attr("width", x_axislength / dataLength - 2) // Set bar width using length of array, leave gap of 2px between rect
 				.attr("height", function(d) {return yScale(+d.rats);}) // Set height of using the scale
-				.attr("fill", rectFill)
 				.on("mouseover", function(d){
 					return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
 				})
@@ -104,16 +102,6 @@
 
 			
 		}
-		
-
-
-
-
-
-
-
-		
-
 	</script>
 
 </body>
