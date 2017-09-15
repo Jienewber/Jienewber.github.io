@@ -114,7 +114,7 @@
 		        .attr("font-size", 10)
 		        .attr("text-anchor", "end")
 		        .selectAll("g")
-		        .data(keys.slice().reverse())
+		        .data(series.keys.slice().reverse())
 		        .enter().append("g")
 		        .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
