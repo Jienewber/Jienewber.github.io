@@ -65,7 +65,7 @@
 			data.sort(function(a, b) { return b.total - a.total; });
 		    x.domain(data.map(function(d) { return d.city; }));
 		    y.domain([0, d3.max(data, function(d) { return d.total; })]).nice();
-		    z.domain(keys);
+		    z.domain(series.keys);
 
 		    // Create Tooltip and set text to it	
 			var tip = d3.tip()
