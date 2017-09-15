@@ -11,8 +11,8 @@
 <body>
 	<script src="js/d3-tip-index.js"></script>
 	<script>
-		var svgWidth = 350,
-			svgHeight = 350,
+		var svgWidth = 400,
+			svgHeight = 400,
 			margin = {top: 20, right: 20, bottom: 30, left: 40},
 			width = svgWidth - margin.left - margin.right,
 			height = svgHeight - margin.top - margin.bottom,
@@ -58,7 +58,6 @@
 			createVisualization(ratData); // call function to create chart
 		});
 
-		
 
 		function createVisualization(data) {
 			data.sort(function(a, b) { return b.total - a.total; });
@@ -72,7 +71,8 @@
 			  	.offset([-10, 0])
 			  	.html(function(d) {
 			  		var amount = d[1] - d[0];
-			    	return "" + d.data.city + ": <span style='color:orange'>" + amount + "</span>";
+			  		alert("d[key]:" + d[key]);
+			    	return "" + d.data.city + ": <span style='color:orange'>" + amount + "</span>"; // Still want to figure out how to add the keys to the tip, have tried d.key, d.keys, d.data.keys, d.data.key, d[key], all failed
 			});
 
 			svg.call(tip);
