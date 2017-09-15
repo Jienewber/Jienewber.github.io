@@ -6,6 +6,7 @@
 	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
 	<!-- Load CSS files -->
 	<link href="css/customize.css" rel="stylesheet">
+	<link href="css/customize-tip.css" rel="stylesheet">
 </head>
 <body>
 	<script src="js/d3-tip-index.js"></script>
@@ -56,7 +57,7 @@
 				.attr('class', 'd3-tip')
 			  	.offset([-10, 0])
 			  	.html(function(d) {
-			    	return ""+ d.city + ": " + d.rats + "";
+			    	return "" + d.city + ": <span style='color:red'>" + d.rats + "</span>";
 			});
 
 			svg.call(tip);
