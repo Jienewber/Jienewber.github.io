@@ -58,6 +58,9 @@
 				.domain([0, 120])
 				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
 
+			alert(d3.max(dataset, function(d) { return d.rats; }));
+			alert(d3.max(dataset, function(d) { return d[1]; }));
+
 
 		createVisualization(dataset);
 
