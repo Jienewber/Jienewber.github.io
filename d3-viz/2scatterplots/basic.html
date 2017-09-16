@@ -19,20 +19,21 @@
 
 		var dataset = [];
 
-		// Load data from csv file
+		// Edited: Load data from csv file
 		d3.csv("data/coffee_rat_squirrel.csv", function(d) {
 			return {
 				city : d.city, // city name
-				rats : +d.rats, // force value of rats to be number (+)
-				squirrels : +d.squirrels,
-				coffee : +d.coffee
+				rats : d.rats, // force value of rats to be number (+)
+				squirrels : d.squirrels,
+				coffee : d.coffee
 			};
-		}, function(error, data) { // catch error if error, read rows
+		}, function(error, rows) { // catch error if error, read rows
 			if (error) throw error;
-			dataset = data; // set ratData equal to rows
+			dataset = rows; // set ratData equal to rows
 			console.log(dataset);
-			createVisualization(dataset); // call function to create scatter plot
+			createVisualization(dataset); // call function to create chart
 		});
+
 
 		var svgWidth = 400,
 			svgHeight = 400,
@@ -49,13 +50,13 @@
 
 		var padding = 50,
 			x = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d.rats; })])
+				.domain([0, d3.max(dataset, function(d) { return d.rats; })])
 				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
 			y = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d.squirrels; })])
+				.domain([0, d3.max(dataset, function(d) { return d.squirrels; })])
 				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
 			r = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d.coffee; })])
+				.domain([0, d3.max(dataset, function(d) { return d.coffee; })])
 				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
 
 
