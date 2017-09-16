@@ -8,14 +8,31 @@
 </head>
 <body>
 	<script>
-		var dataset = [
-			{city: "Somerville", rats: 60, squirrels: 40, coffee: 40 },
-			{city: "Cambridge", rats: 30, squirrels: 10, coffee: 90 },
-			{city: "Boston", rats: 90, squirrels: 50, coffee: 120 },
-			{city: "Brookline", rats: 40, squirrels: 30, coffee: 50 },
-			{city: "Chelsea", rats: 10, squirrels: 35, coffee: 10 },
-			{city: "Sunnyvale", rats: 50, squirrels: 20, coffee: 70 }
-		];
+		// var dataset = [
+		// 	{city: "Somerville", rats: 60, squirrels: 40, coffee: 40 },
+		// 	{city: "Cambridge", rats: 30, squirrels: 10, coffee: 90 },
+		// 	{city: "Boston", rats: 90, squirrels: 50, coffee: 120 },
+		// 	{city: "Brookline", rats: 40, squirrels: 30, coffee: 50 },
+		// 	{city: "Chelsea", rats: 10, squirrels: 35, coffee: 10 },
+		// 	{city: "Sunnyvale", rats: 50, squirrels: 20, coffee: 70 }
+		// ];
+
+		var dataset = [];
+
+		// Load data from csv file
+		d3.csv("data/coffee_rat_squirrel.csv", function(d) {
+			return {
+				city : d.city, // city name
+				rats : +d.rats, // force value of rats to be number (+)
+				squirrels : +d.squirrels,
+				coffee : +d.coffee
+			};
+		}, function(error, data) { // catch error if error, read rows
+			if (error) throw error;
+			dataset = data; // set ratData equal to rows
+			console.log(dataset);
+			createVisualization(dataset); // call function to create scatter plot
+		});
 
 		var svgWidth = 400,
 			svgHeight = 400,
