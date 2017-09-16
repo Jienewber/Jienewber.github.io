@@ -49,13 +49,13 @@
 
 		var padding = 50,
 			x = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return d.rats; })])
+				.domain([0, d3.max(dataset, function(d) { return d[1]; })])
 				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
 			y = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return d.squirrels; })])
+				.domain([0, d3.max(dataset, function(d) { return d[2]; })])
 				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
 			r = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return d.coffee; })])
+				.domain([0, d3.max(dataset, function(d) { return d[3]; })])
 				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
 
 
@@ -70,7 +70,8 @@
 		      .attr("class", "cir")
 		      .attr("cx", function(d) { return x(d.rats); })
 		      .attr("cy", function(d) { return y(d.squirrels); })
-		      .attr("r", function(d) { return r(d.coffee); });
+		      .attr("r", function(d) { return r(d.coffee); })
+		      .attr("fill", "maroon");
 
 		    // Add text for x, y, and r
 		    g.append("g")
