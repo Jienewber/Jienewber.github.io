@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>2.1 Rat Squirrels and Coffee</title>
+	<!-- Load D3js library and d3.tip library -->
+	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+	<link href="css/customize.css" rel="stylesheet">
+</head>
+<body>
+	<script>
+		var dataset = [
+			{city: "Somerville", rats: 60, squirrels: 40, coffee: 40 },
+			{city: "Cambridge", rats: 30, squirrels: 10, coffee: 90 },
+			{city: "Boston", rats: 90, squirrels: 50, coffee: 120 },
+			{city: "Brookline", rats: 40, squirrels: 30, coffee: 50 },
+			{city: "Chelsea", rats: 10, squirrels: 35, coffee: 10 },
+			{city: "Sunnyvale", rats: 50, squirrels: 20, coffee: 70 }
+		];
+
+		var svgWidth = 400,
+			svgHeight = 400,
+			margin = {top: 20, right: 20, bottom: 30, left: 40},
+			width = svgWidth - margin.left - margin.right,
+			height = svgHeight - margin.top - margin.bottom,
+			svg = d3.select("body")
+				.append("svg")  // The append() method creates a new element as a child of each element in the current selection
+				.attr("width", svgWidth)
+				.attr("height", svgHeight)
+				.attr("style", "outline: thin solid maroon;"),
+			g = svg.append("g")
+				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		var padding = 50,
+			x = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d.rats; })])
+				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
+			y = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d.squirrels; })])
+				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
+			r = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d.coffee; })])
+				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
+
+
+		createVisualization(dataset);
+
+		function createVisualization(data) {
+			// Add scatter points
+		    g.append("g")
+		      .selectAll(".cir")
+		      .data(data)
+		      .enter().append("circle")
+		      .attr("class", "cir")
+		      .attr("cx", function(d) { return x(d.rats); })
+		      .attr("cy", function(d) { return y(d.squirrels); })
+		      .attr("r", function(d) { return r(d.coffee); });
+
+		    // Add text for x, y, and r
+		    g.append("g")
+		    	.selectAll("text")
+			   	.data(data)
+			   	.enter().append("text")
+			   	.text(function(d) {
+			   		return d.rats + "," + d.squirrels + "," +d.coffee;
+			   	})
+			  	.attr("x", function(d) { return x(d.rats); })
+		      	.attr("y", function(d) { return y(d.squirrels); });
+
+			// Add axis 
+    		g.append("g")
+		        .attr("class", "axis")
+		        .attr("transform", "translate(0," + (height-padding) + ")")
+		        .call(d3.axisBottom(x));
+
+		    g.append("g")
+		        .attr("class", "axis")
+		        .attr("transform", "translate(" + padding + ", 0)")
+		        .call(d3.axisLeft(y).ticks(null, "s"))
+		        .append("text")
+		        .attr("x", 2 )
+		        .attr("y", y(y.ticks().pop()) + 0.5)
+		        .attr("font-weight", "bold") // specify the font style of Amount
+		        .attr("text-anchor", "start")
+		        .text("Amount");
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+text {
+	font-family: "open sans", sans-serif;
+	font-size: 12px;
+	fill: red;
+}
+
+.axis path,
+.axis line {
+    fill: none;
+    stroke: silver;
+    shape-rendering: crispEdges;
+}
+
+.axis text {
+    font-family: "open sans", sans-serif;
+	font-size: 12px;
+	fill: silver;
+}
