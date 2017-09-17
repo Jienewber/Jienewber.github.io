@@ -32,6 +32,7 @@
 			if (error) throw error;
 			dataset = data; // set ratData equal to rows
 			console.log(dataset);
+			createVisualization(dataset);
 			console.log(d3.max(dataset, function(d) { return +d.rats; }));
 			console.log(d3.max(dataset, function(d) { return +d[1]; }));
 			
@@ -67,7 +68,7 @@
 			alert(d3.max(dataset, function(d) { return +d[1]; }));
 
 
-		createVisualization(dataset);
+		
 
 		function createVisualization(data) {
 			// Add scatter points
@@ -76,10 +77,9 @@
 		      .data(data)
 		      .enter().append("circle")
 		      .attr("class", "cir")
-		      .attr("cx", function(d) { return x(d[1]); })
-		      .attr("cy", function(d) { return y(d[2]); })
-		      .attr("r", function(d) { return r(d[3]); })
-		      .attr("fill", "maroon");
+		      .attr("cx", function(d) { return x(d.rats); })
+		      .attr("cy", function(d) { return y(d.squirrels); })
+		      .attr("r", function(d) { return r(d.coffee); });
 
 		    // Add text for x, y, and r
 		    g.append("g")
@@ -87,10 +87,10 @@
 			   	.data(data)
 			   	.enter().append("text")
 			   	.text(function(d) {
-			   		return d[1] + "," + d[2] + "," +d[3];
+			   		return d.rats + "," + d.squirrels + "," +d.coffee;
 			   	})
-			  	.attr("x", function(d) { return x(d[1]); })
-		      	.attr("y", function(d) { return y(d[2]); });
+			  	.attr("x", function(d) { return x(d.rats); })
+		      	.attr("y", function(d) { return y(d.squirrels); });
 
 			// Add axis 
     		g.append("g")
