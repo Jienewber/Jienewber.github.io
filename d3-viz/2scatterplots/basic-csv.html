@@ -19,6 +19,7 @@
 
 		var dataset = [];
 
+
 		// Edited: Load data from csv file
 		d3.csv("data/coffee_rat_squirrel.csv", function(d) {
 			return {
@@ -31,8 +32,12 @@
 			if (error) throw error;
 			dataset = data; // set ratData equal to rows
 			console.log(dataset);
+			console.log(d3.max(dataset, function(d) { return +d.rats; }));
+			console.log(d3.max(dataset, function(d) { return +d[1]; }));
+			
 		});
 
+		console.log(dataset);
 
 		var svgWidth = 400,
 			svgHeight = 400,
