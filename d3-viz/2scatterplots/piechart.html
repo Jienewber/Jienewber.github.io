@@ -25,8 +25,15 @@
 		    .value(function(d) { return d.cen1990; })
 		    .sort(null);
 
+
+		// // option 1: donuts
+		// var arc = d3.svg.arc() 
+		//     .innerRadius(radius - 100)
+		//     .outerRadius(radius - 20);
+
+		// option 2: pie chart, not donut
 		var arc = d3.svg.arc() 
-		    .innerRadius(radius - 100)
+		    .innerRadius(0)
 		    .outerRadius(radius - 20);
 
 		var svg = d3.select("body").append("svg")
