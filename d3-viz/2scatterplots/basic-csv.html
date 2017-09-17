@@ -33,12 +33,8 @@
 			dataset = data; // set ratData equal to rows
 			console.log(dataset);
 			createVisualization(dataset);
-			console.log(d3.max(dataset, function(d) { return +d.rats; }));
-			console.log(d3.max(dataset, function(d) { return +d[1]; }));
-			
 		});
 
-		console.log(dataset);
 
 		var svgWidth = 400,
 			svgHeight = 400,
@@ -52,25 +48,21 @@
 				.attr("style", "outline: thin solid maroon;"),
 			g = svg.append("g")
 				.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-		var padding = 50,
-			x = d3.scaleLinear()
-				.domain([0, 90])
-				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
-			y = d3.scaleLinear()
-				.domain([0, 50])
-				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
-			r = d3.scaleLinear()
-				.domain([0, 120])
-				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
-
-			alert(d3.max(dataset, function(d) { return +d.rats; }));
-			alert(d3.max(dataset, function(d) { return +d[1]; }));
-
-
 		
 
 		function createVisualization(data) {
+			// set padding and scales for x, y, and r (size of the circle)
+			var padding = 50,
+			x = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d[1]; })])
+				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
+			y = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d[2]; })])
+				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
+			r = d3.scaleLinear()
+				.domain([0, d3.max(dataset, function(d) { return +d[3]; })])
+				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
+
 			// Add scatter points
 		    g.append("g")
 		      .selectAll(".cir")
