@@ -54,13 +54,13 @@
 			// set padding and scales for x, y, and r (size of the circle)
 			var padding = 50,
 			x = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d[1]; })])
+				.domain([0, d3.max(dataset, function(d) { return +d.rats; })])
 				.rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
 			y = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d[2]; })])
+				.domain([0, d3.max(dataset, function(d) { return +d.squirrels; })])
 				.rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
 			r = d3.scaleLinear()
-				.domain([0, d3.max(dataset, function(d) { return +d[3]; })])
+				.domain([0, d3.max(dataset, function(d) { return +d.coffee; })])
 				.rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
 
 			// Add scatter points
