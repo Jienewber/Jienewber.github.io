@@ -48,7 +48,7 @@
 
 		// option 2: pie chart, not donut
 		var arc = d3.svg.arc() 
-		    .innerRadius(0) // change the innerRadius to 0
+		    .innerRadius(radius - 80) // change the innerRadius to 0
 		    .outerRadius(radius - 20);
 
 		var svg = d3.select("body").append("svg")
