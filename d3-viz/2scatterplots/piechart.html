@@ -19,7 +19,7 @@
 		    height = 400,
 		    radius = Math.min(width, height) / 2;
 
-		var color = d3.scale.category20();
+		var color = d3.schemeCategory20c();
 
 		var pie = d3.layout.pie()
 		    .value(function(d) { return d.cen1990; })
@@ -33,7 +33,7 @@
 
 		// option 2: pie chart, not donut
 		var arc = d3.svg.arc() 
-		    .innerRadius(0)
+		    .innerRadius(0) // change the innerRadius to 0
 		    .outerRadius(radius - 20);
 
 		var svg = d3.select("body").append("svg")
@@ -49,6 +49,14 @@
 		      .attr("fill", function(d, i) { return color(i); })
 		      .attr("d", arc);
 
+		  // Add text for population number
+		  svg.selectAll("text")
+		  	.data(pie)
+			.enter().append("text")
+			.text(function(d) {
+		   		return d[value];
+			});
+
 		  d3.selectAll("input")
 		      .on("change", change);
 
@@ -62,6 +70,13 @@
 		    pie.value(function(d) { return d[value]; }); // change the value function
 		    path = path.data(pie); // compute the new angles
 		    path.attr("d", arc); // redraw the arcs
+		    // Add text for population number
+			svg.selectAll("text")
+			  	.data(pie)
+				.enter().append("text")
+				.text(function(d) {
+			   		return d[value];
+			});
 		  }
 		});
 
