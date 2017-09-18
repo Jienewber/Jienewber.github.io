@@ -19,7 +19,7 @@
 		    height = 400,
 		    radius = Math.min(width, height) / 2;
 
-		var color = d3.schemeCategory20c();
+		var color = d3.scale.category20c();
 
 		var pie = d3.layout.pie()
 		    .value(function(d) { return d.cen1990; })
