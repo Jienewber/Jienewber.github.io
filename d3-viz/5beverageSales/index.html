@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Philly Dental</title>
+	<!-- Import stylesheets -->
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/customize.css" />
+</head>
+<body>
+	<!--left panel-->
+    <div id="leftPanel" style="position:fixed;left:0px;width:400px">
+    </div>
+    <!--map-->
+    <div id="map" style="position:fixed;right:0px;left:400px;height:100%;">
+    </div>
+    <!-- Import javascripts -->
+    <script src="js/leaflet.js"></script>
+    <script src="js/health_centers.js"></script>
+    <script type="text/javascript" src="js/geojson.min.js"></script>
+
+    <script>
+    	// Add basemap
+    	var map = L.map('map', {
+	        center: [39.9522, -75.1639],
+	        zoom: 14
+	      });
+	    var Stamen_TonerLite = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+		      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	      	subdomains: 'abcd',
+	      	minZoom: 0,
+	      	maxZoom: 20,
+	      	ext: 'png'
+	    }).addTo(map);
+
+    	// Convert the JSON to GeoJSON file
+    	var myGeoJSON = GeoJSON.parse(healthCenters, {Point: ['LAT', 'LNG']});
+    	console.log(myGeoJSON);
+
+    	// Customize the icon
+    	var normalIcon = L.icon({
+          iconUrl: 'images/normalIcon.png',
+          iconSize: [20, 20]
+      	});
+
+      	var dentalIcon = L.icon({
+          iconUrl: 'images/dentistIcon.png',
+          iconSize: [25, 25]
+      	});
+
+    	var healthCenterLocations = L.geoJson(myGeoJSON,{
+    		pointToLayer: function(feature, latlng) {
+    			if (feature.properties.DENTAL_PHONE !== "N/A") {
+    				return L.marker(latlng, {icon: dentalIcon, draggable: true});
+    			} else {
+    				return L.marker(latlng, {icon: normalIcon, draggable: true});
+    			};
+          	}, 
+          	onEachFeature: function (feature, layer) {
+            	layer.bindPopup('<h2>' + feature.properties.NAME + '</h2><p>' + feature.properties.FULL_ADDRESS + '<br>Philadelphia, PA ' + feature.properties.ZIP + '</p>');
+          	},
+			filter: function(feature, layer) {
+				return feature.properties.ZIP >= 19140 && feature.properties.ZIP <= 19149 ;
+			}
+        }).addTo(map);
+    </script>
+
+</body>
+</html>

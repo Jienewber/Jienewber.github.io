@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Uber Movement Visualization</title>
+	<!-- Import stylesheets -->
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="css/customize.css" />
+</head>
+<body>
+	<!--left panel-->
+    <div id="leftPanel" style="position:fixed;left:0px;width:400px">
+    </div>
+    <!--map-->
+    <div id="map" style="position:fixed;right:0px;left:400px;height:100%;">
+    </div>
+    <!-- Import javascripts -->
+    <script src="js/leaflet.js"></script>
+
+    <script>
+    	// Add basemap
+    	var map = L.map('map', {
+	        center: [42.36, -71.109324],
+	        zoom: 13
+	      });
+
+	    var basemap = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}.{ext}', {
+		      attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+	      	subdomains: 'abcd',
+	      	minZoom: 0,
+	      	maxZoom: 20,
+	      	ext: 'png'
+	    }).addTo(map);
+
+	    var reverselatlng = [[-71.0912,42.35435],[-71.09304,42.35388],[-71.09725,42.35319],[-71.1024,42.35262],[-71.10305,42.35251],[-71.10365,42.35374],[-71.10441,42.35544],[-71.10457,42.35584],[-71.10204,42.35709],[-71.10013,42.35807],[-71.09883,42.35867],[-71.09709,42.35952],[-71.09529,42.36043],[-71.09485,42.36017],[-71.09431,42.35978],[-71.09411,42.35961],[-71.09383,42.35934],[-71.09371,42.35922],[-71.09354,42.35899],[-71.09319,42.35838],[-71.0912,42.35435]];
+	    var latlng = [];
+
+	    for (var i = 0; i < reverselatlng.length; i++) {
+	    	latlng[i] = [reverselatlng[i][1], reverselatlng[i][0]];
+	    }
+	    console.log(latlng);
+    	
+    	var boston886 = L.polygon(latlng).addTo(map).bindPopup("CAMBRIDGE, 644 (886)");
+
+    </script>
+
+</body>
+</html>
