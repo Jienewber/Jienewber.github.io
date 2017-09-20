@@ -23,13 +23,16 @@
         <button id="start">Transition</button>
         <button id="reset" style="margin-left: 5px">Reset</button>
       <h2>Part 2: Scatterplot - Adding Transitions between Data Fields</h2>
-        <button id="startPlot">Transition</button>
-        <button id="resetPlot" style="margin-left: 5px">Reset</button>
+        <button id="startPlot">Year 2016</button>
+        <button id="resetPlot" style="margin-left: 5px">Year 2015</button>
+      <h2>Part 3: Bar Chart</h2>
+        <button id="ratdata1">Dataset 1</button>
+        <button id="ratdata2" style="margin-left: 5px">Dataset 2</button>
     </div>
 
     <script>
 
-    // Part 1
+    // Part 1 Rectangle
     var svgContainer1 = d3.select("div.board").append("svg")
       .attr("width", 300)
       .attr("height", 150)
@@ -81,7 +84,7 @@
         .duration(2500); 
     });
 
-    // Part 2
+    // Part 2 Scatterplot
     var dataset = [];
 
     d3.csv("data/coffee_rodents_transform.csv", function(d) {
@@ -114,8 +117,6 @@
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("style", "outline: black");
 
-    var circles = null, 
-        notes = null;
 
     function createVisualization(data) {
       // set padding and scales for x (0 to max of the two rats column), y (0 to max of the two coffee columns)
@@ -130,7 +131,7 @@
         .rangeRound([height - padding, padding]); // reverse y to make the larger values on the top
 
       // Add scatter points
-      circles = g.append("g")
+      var circles = g.append("g")
           .selectAll(".cir")
           .data(data)
           .enter().append("circle")
@@ -140,7 +141,7 @@
           .attr("r", 5);
 
         // Add text for x, y, and r
-      notes = g.append("g")
+      var notes = g.append("g")
           .selectAll("text")
           .data(data)
           .enter().append("text")
@@ -197,7 +198,43 @@
         });
     }
 
-    
+    // Part 3: Bar Chart
+    var ratChanges = [];
+
+    d3.select("#ratdata1").on("click", function() {
+        d3.csv("data/rat-data-1.csv", function(d) {
+          return {
+            city : d.city,
+            rats : +d.rats
+          };
+        }, function(error, rows) {
+          if (error) throw error;
+          ratChanges = rows;
+          console.log(ratChanges);
+          // updateChange(ratChanges);
+        });  
+    });
+
+    d3.select("#ratdata2").on("click", function() {
+        d3.csv("data/rat-data-2.csv", function(d) {
+          return {
+            city : d.city,
+            rats : +d.rats
+          };
+        }, function(error, rows) {
+          if (error) throw error;
+          ratChanges = rows;
+          console.log(ratChanges);
+          // updateChange(ratChanges);
+        });  
+    });
+
+    var svgContainer3 = d3.select("div.board")
+          .append("svg")  // The append() method creates a new element as a child of each element in the current selection
+          .attr("width", svgWidth)
+          .attr("height", svgHeight)
+          .attr("style", "outline: thin solid maroon");
+
 
 
     </script>
