@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>3.1 Transitions</title>
+    <!-- CSS Imports -->
+    <meta charset=utf-8>
+    <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+  </head>
+  <body>
+    <!-- Header, Board for D3 drawing, and Sidebar -->
+    <div class="header"></div>
+    <div id="container" class="board">
+      
+
+    </div>
+    <div class="sidebar">
+      <h1>Transition in D3 Way</h1>
+      <p>Source: DUSPviz - D3 Workshop Series 3<br><a href="http://duspviz.mit.edu/d3-workshop/transitions-animation/">Interaction and Animation: D3 Transitions, Behaviors, and Brushing</a></p>
+      <h2>Part 1: Rectangle</h2>
+        <button id="start">Transition</button>
+        <button id="reset" style="margin-left: 5px">Reset</button>
+      <h2>Part 2: Scatterplot - Adding Transitions between Data Fields</h2>
+        <button id="startPlot">Transition</button>
+        <button id="resetPlot" style="margin-left: 5px">Reset</button>
+    </div>
+
+    <!-- Javascript Imports -->
+    <script src="js/leaflet.js"></script>
+    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+
+    <script>
+
+    // Part 1
+    var svgContainer = d3.select("div.board").append("svg")
+      .attr("width", 300)
+      .attr("height", 150)
+      .style("border-color", "black")
+      .style("border-style", "solid")
+      .style("border-width", "1px");
+
+     
+    // Draw the Rectangle
+    var rectangle = svgContainer.append("rect")
+      .attr("x", 50)
+      .attr("y", 50)
+      .attr("width", 50)
+      .attr("height", 50);
+
+    d3.select("#start").on("click", function() {
+      d3.selectAll("rect")
+        .transition()
+        .attr("width", 100)
+        .attr("height", 100) // new size
+        .attr("opacity", 0.5) // new opacity
+        .attr("fill", "red") // new color
+        .attr("x", 200) // new position
+        .delay(500) // delay 500ms(0.5s) before the start of the transition
+        .duration(2500) // Set Duration, default is 250ms
+        .ease(d3.easeBounce)
+        .on("end",function() { // on end of first transition...
+            d3.select(this)
+              .transition() // second transition
+              .attr("width", 75) // second width
+              .attr("height", 75) // second height
+              .attr("opacity", 0.75) // second opacity
+              .attr("fill", "blue") // second color
+              .attr("x", 150) // second x
+              .delay(500) // second delay
+              .duration(2500) // second time
+              .ease(d3.easeBounce); // second ease
+        });
+    });
+
+    d3.select("#reset").on("click", function() {
+      rectangle
+        .transition()
+        .attr("width", 50)
+        .attr("height", 50)
+        .attr("opacity", 1)
+        .attr("fill", "black")
+        .attr("x", 50)
+        .duration(2500); 
+    });
+
+    // Part 2
+    var ratData = [];
+
+    d3.csv("data/coffee_rodents_transform.csv", function(d) {
+      return {
+        city : d.city,
+        rats2015 : +d.rats_2015, // new field
+        coffee2015 : +d.coffee_2015, // new field
+        rats2016 : +d.rats_2016, // new field
+        coffee2016 : + d.coffee_2016 // new field
+      };
+    }, function(error, rows) {
+      ratData = rows;
+      console.log(ratData);
+    });
+
+
+    </script>
+
+
+  </body>
+</html>
