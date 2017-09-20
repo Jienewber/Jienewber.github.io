@@ -248,20 +248,25 @@
 
 
     function updateChange(dataset) {
+        console.log(`dataset.length ${dataset.length}`)
+
         var padding = 20,
         y = d3.scaleLinear()
               .domain([0, d3.max(dataset, function(d) {return d.rats;})])
               .rangeRound([padding, height3 - padding]); // different from scatter plots, should make range from smaller value to larger value
-
-        g3.append("g3")
-            .selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect")
-            .transition()
-            .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
-            .attr("height", function(d) {return y(d.rats);})
-            .attr("fill", "maroon");
+        console.log(d3.max(dataset, function(d) {return d.rats;}))
+        
+        var rect = g3.append("g3")
+          .selectAll("bar")
+          .data(dataset)
+          .enter().append("rect")
+          .attr("class", "bar")
+          .transition()
+          .attr("x", function(d, i) {return i * (width3 / dataset.length) + 20;}) // Set x coord of rect using length of array, start from (20,y)
+          .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
+          .attr("width", width3 / dataset.length - 2) // Set bar width using length of array, leave gap of 2px between rect
+          .attr("height", function(d) {return y(d.rats);})
+          .attr("fill", "maroon");
             // .on("mouseover", function(d){
             //   return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
             // })
