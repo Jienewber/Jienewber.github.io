@@ -26,7 +26,7 @@
         <button id="startPlot">Year 2016</button>
         <button id="resetPlot" style="margin-left: 5px">Year 2015</button>
       <h2>Part 3: Bar Chart</h2>
-        <button id="ratdata1">Dataset 1</button>
+        <button id="ratdata1" checked>Dataset 1</button>
         <button id="ratdata2" style="margin-left: 5px">Dataset 2</button>
     </div>
 
@@ -211,7 +211,7 @@
           if (error) throw error;
           ratChanges = rows;
           console.log(ratChanges);
-          // updateChange(ratChanges);
+          updateChange(ratChanges);
         });  
     });
 
@@ -225,7 +225,7 @@
           if (error) throw error;
           ratChanges = rows;
           console.log(ratChanges);
-          // updateChange(ratChanges);
+          updateChange(ratChanges);
         });  
     });
 
