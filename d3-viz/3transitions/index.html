@@ -113,7 +113,9 @@
         g = svgContainer2.append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
           .attr("style", "outline: black");
-    
+
+    var circles = null, 
+        notes = null;
 
     function createVisualization(data) {
       // set padding and scales for x (0 to max of the two rats column), y (0 to max of the two coffee columns)
@@ -128,7 +130,7 @@
         .rangeRound([height - padding, padding]); // reverse y to make the larger values on the top
 
       // Add scatter points
-      var circles = g.append("g")
+      circles = g.append("g")
           .selectAll(".cir")
           .data(data)
           .enter().append("circle")
@@ -138,7 +140,7 @@
           .attr("r", 5);
 
         // Add text for x, y, and r
-      var notes = g.append("g")
+      notes = g.append("g")
           .selectAll("text")
           .data(data)
           .enter().append("text")
