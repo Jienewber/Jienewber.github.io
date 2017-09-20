@@ -77,12 +77,18 @@ text {
 .axis path,
 .axis line {
   fill: none;
-  stroke: darkgrey;
+  stroke: floralwhite;
   shape-rendering: crispEdges;
 }
 
 .axis text {
   font-family: "open sans", sans-serif;
   font-size: 12px;
-  fill: darkgrey;
+  fill: floralwhite;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }

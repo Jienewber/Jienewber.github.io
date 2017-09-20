@@ -35,7 +35,7 @@
     // Part 1 Rectangle
     var svgContainer1 = d3.select("div.board").append("svg")
       .attr("width", 300)
-      .attr("height", 150)
+      .attr("height", 450)
       .style("border-color", "black")
       .style("border-style", "solid")
       .style("border-width", "1px");
@@ -280,7 +280,9 @@
         svgContainer3.append("g")
               .attr("class", "axis")
               .attr("transform", "translate(0," + (height3-padding) + ")")
-              .call(d3.axisBottom(x));
+              .append("text")
+              .attr("y", width3)
+              .text("Cities");
 
         svgContainer3.append("g")
               .attr("class", "axis")
@@ -288,7 +290,7 @@
               .call(d3.axisLeft(y).ticks(null, "s"))
               .append("text")
               .attr("x", 2 )
-              .attr("y", y(y.ticks().pop()))
+              .attr("y", height3 - padding)
               .attr("font-weight", "bold") // specify the font style of Amount
               .attr("text-anchor", "start")
               .text("Rats");
