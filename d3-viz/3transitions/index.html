@@ -2,21 +2,20 @@
 <html>
   <head>
     <title>3.1 Transitions</title>
-    <!-- CSS Imports -->
     <meta charset=utf-8>
     <meta name=viewport content="width=device-width, initial-scale=1.0">
+    <!-- CSS Imports -->
     <link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
-    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+    <!-- Load D3js library and d3.tip library -->
+    <script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
   </head>
+
   <body>
     <!-- Header, Board for D3 drawing, and Sidebar -->
     <div class="header"></div>
-    <div id="container" class="board">
-      
-
-    </div>
+    <div id="container" class="board"></div>
     <div class="sidebar">
       <h1>Transition in D3 Way</h1>
       <p>Source: DUSPviz - D3 Workshop Series 3<br><a href="http://duspviz.mit.edu/d3-workshop/transitions-animation/">Interaction and Animation: D3 Transitions, Behaviors, and Brushing</a></p>
@@ -27,10 +26,6 @@
         <button id="startPlot">Transition</button>
         <button id="resetPlot" style="margin-left: 5px">Reset</button>
     </div>
-
-    <!-- Javascript Imports -->
-    <script src="js/leaflet.js"></script>
-    <script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
 
     <script>
 
@@ -86,21 +81,21 @@
         .duration(2500); 
     });
 
-    // Part 2
-    var ratData = [];
+    // // Part 2
+    // var ratData = [];
 
-    d3.csv("data/coffee_rodents_transform.csv", function(d) {
-      return {
-        city : d.city,
-        rats2015 : +d.rats_2015, // new field
-        coffee2015 : +d.coffee_2015, // new field
-        rats2016 : +d.rats_2016, // new field
-        coffee2016 : + d.coffee_2016 // new field
-      };
-    }, function(error, rows) {
-      ratData = rows;
-      console.log(ratData);
-    });
+    // d3.csv("data/coffee_rodents_transform.csv", function(d) {
+    //   return {
+    //     city : d.city,
+    //     rats2015 : +d.rats_2015, // new field
+    //     coffee2015 : +d.coffee_2015, // new field
+    //     rats2016 : +d.rats_2016, // new field
+    //     coffee2016 : + d.coffee_2016 // new field
+    //   };
+    // }, function(error, rows) {
+    //   ratData = rows;
+    //   console.log(ratData);
+    // });
 
 
     </script>
