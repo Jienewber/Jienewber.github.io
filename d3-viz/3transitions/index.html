@@ -30,7 +30,7 @@
     <script>
 
     // Part 1
-    var svgContainer = d3.select("div.board").append("svg")
+    var svgContainer1 = d3.select("div.board").append("svg")
       .attr("width", 300)
       .attr("height", 150)
       .style("border-color", "black")
@@ -39,7 +39,7 @@
 
      
     // Draw the Rectangle
-    var rectangle = svgContainer.append("rect")
+    var rectangle = svgContainer1.append("rect")
       .attr("x", 50)
       .attr("y", 50)
       .attr("width", 50)
@@ -81,21 +81,91 @@
         .duration(2500); 
     });
 
-    // // Part 2
-    // var ratData = [];
+    // Part 2
+    var dataset = [];
 
-    // d3.csv("data/coffee_rodents_transform.csv", function(d) {
-    //   return {
-    //     city : d.city,
-    //     rats2015 : +d.rats_2015, // new field
-    //     coffee2015 : +d.coffee_2015, // new field
-    //     rats2016 : +d.rats_2016, // new field
-    //     coffee2016 : + d.coffee_2016 // new field
-    //   };
-    // }, function(error, rows) {
-    //   ratData = rows;
-    //   console.log(ratData);
-    // });
+    d3.csv("data/coffee_rodents_transform.csv", function(d) {
+      return {
+        city : d.city,
+        rats2015 : +d.rats_2015, // new field
+        coffee2015 : +d.coffee_2015, // new field
+        rats2016 : +d.rats_2016, // new field
+        coffee2016 : + d.coffee_2016 // new field
+      };
+    }, function(error, rows) {
+      if (error) throw error;
+      dataset = rows;
+      console.log(dataset);
+      createVisualization(dataset);
+    });
+
+    var svgWidth = 300,
+        svgHeight = 400,
+        margin = {top: 20, right: 20, bottom: 30, left: 40},
+        width = svgWidth - margin.left - margin.right,
+        height = svgHeight - margin.top - margin.bottom,
+        svgContainer2 = d3.select("div.board")
+          .append("svg")  // The append() method creates a new element as a child of each element in the current selection
+          .attr("y", 180)
+          .attr("width", svgWidth)
+          .attr("height", svgHeight)
+          .attr("style", "outline: thin solid maroon"),
+        g = svgContainer2.append("g")
+          .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+          .attr("style", "outline: black");
+    
+
+    function createVisualization(data) {
+      // set padding and scales for x, y, and r (size of the circle)
+      var padding = 50,
+      x = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function(d) { return +d.rats2015; })])
+        .rangeRound([padding, width - padding]), // reverse y to make the larger values on the top
+      y = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function(d) { return +d.rats2016; })])
+        .rangeRound([height - padding, padding]), // reverse y to make the larger values on the top
+      r = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function(d) { return +d.coffee2015; })])
+        .rangeRound([2,8]); // make the size of the circle is modified according to the amount of coffees
+
+      // Add scatter points
+        g.append("g")
+          .selectAll(".cir")
+          .data(data)
+          .enter().append("circle")
+          .attr("class", "cir")
+          .attr("cx", function(d) { return x(d.rats2015); })
+          .attr("cy", function(d) { return y(d.rats2016); })
+          .attr("r", function(d) { return r(d.coffee2015); });
+
+        // Add text for x, y, and r
+        g.append("g")
+          .selectAll("text")
+          .data(data)
+          .enter().append("text")
+          .text(function(d) {
+            return d.rats2015 + "," + d.rats2016 + "," +d.coffee2015;
+          })
+          .attr("x", function(d) { return x(d.rats2015); })
+          .attr("y", function(d) { return y(d.rats2016); });
+
+      // Add axis 
+        g.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (height-padding) + ")")
+            .call(d3.axisBottom(x));
+
+        g.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(" + padding + ", 0)")
+            .call(d3.axisLeft(y).ticks(null, "s"))
+            .append("text")
+            .attr("x", 2 )
+            .attr("y", y(y.ticks().pop()))
+            .attr("font-weight", "bold") // specify the font style of Amount
+            .attr("text-anchor", "start")
+            .text("Amount");
+    }
 
 
     </script>
