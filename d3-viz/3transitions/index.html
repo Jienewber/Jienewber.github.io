@@ -240,11 +240,10 @@
             .attr("y", 180)
             .attr("width", svgWidth3)
             .attr("height", svgHeight3)
-            .attr("style", "outline: thin solid maroon"),
-
-        g3 = svgContainer3.append("g")
-          .attr("transform", "translate(" + margin3.left + "," + margin3.top + ")")
-          .attr("style", "outline: black");
+            .attr("style", "outline: thin solid maroon")
+            .append("g")
+            .attr("transform", "translate(" + margin3.left + "," + margin3.top + ")")
+            .attr("style", "outline: black");
 
 
     function updateChange(dataset) {
@@ -254,13 +253,12 @@
         y = d3.scaleLinear()
               .domain([0, d3.max(dataset, function(d) {return d.rats;})])
               .rangeRound([padding, height3 - padding]); // different from scatter plots, should make range from smaller value to larger value
-        console.log(d3.max(dataset, function(d) {return d.rats;}))
+        console.log(d3.max(dataset, function(d) {return d.rats;}));
         
-        var rect = g3.append("g3")
-          .selectAll("bar")
+        svgContainer3.append("g")
+          .selectAll("rect")
           .data(dataset)
           .enter().append("rect")
-          .attr("class", "bar")
           .transition()
           .attr("x", function(d, i) {return i * (width3 / dataset.length) + 20;}) // Set x coord of rect using length of array, start from (20,y)
           .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
@@ -277,7 +275,89 @@
             // .on("mouseout", function(d){
             //   return tooltip.style("visibility", "hidden");
             // });
-     }
+
+        // Add axis 
+        svgContainer3.append("g")
+              .attr("class", "axis")
+              .attr("transform", "translate(0," + (height3-padding) + ")")
+              .call(d3.axisBottom(x));
+
+        svgContainer3.append("g")
+              .attr("class", "axis")
+              .attr("transform", "translate(" + padding + ", 0)")
+              .call(d3.axisLeft(y).ticks(null, "s"))
+              .append("text")
+              .attr("x", 2 )
+              .attr("y", y(y.ticks().pop()))
+              .attr("font-weight", "bold") // specify the font style of Amount
+              .attr("text-anchor", "start")
+              .text("Rats");
+    }
+
+    // Part 4: Line chart transition
+    var svgWidth4 = 300,
+        svgHeight4 = 400,
+        margin4 = {top: 10, right: 10, bottom: 10, left: 10},
+        width4 = svgWidth4 - margin4.left - margin4.right,
+        height4 = svgHeight4 - margin4.top - margin4.bottom;
+
+    var parseDate = d3.timeParse("%b %Y");
+
+    var x = d3.scaleTime()
+      .range([0, width4]);
+
+    var y = d3.scaleLinear()
+        .range([height4, 0]);
+
+    var xAxis = d3.axisBottom()
+        .scale(x);
+
+    var yAxis = d3.axisLeft()
+        .scale(y);
+
+    var line = d3.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.rate); });
+
+    var svgContainer4 = d3.select("div.board").append("svg")
+        .attr("width", svgWidth4)
+        .attr("height", svgHeight4)
+        .append("g")
+        .attr("transform", "translate(" + margin4.left + "," + margin4.top + ")");
+
+    d3.csv("data/unemployment_2005_2015.csv", function(error, data) {
+      if (error) throw error;
+      console.log(data);
+
+      data.forEach(function(d) {
+        d.date = parseDate(d.date);
+        d.rate = +d.rate;
+      });
+
+      x.domain(d3.extent(data, function(d) { return d.date; }));
+      y.domain(d3.extent(data, function(d) { return d.rate; }));
+
+      svgContainer4.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(0," + height4 + ")")
+          .call(xAxis);
+
+      svgContainer4.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Unemployment Rate (%)");
+
+      svgContainer4.append("path")
+          .datum(data)
+          .attr("class", "line")
+          .attr("d", line);
+    });
+
 
 
 
