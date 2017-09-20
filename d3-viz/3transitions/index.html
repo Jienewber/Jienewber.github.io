@@ -237,9 +237,9 @@
 
     function updateChange(dataset) {
         var padding = 20,
-            y = d3.scaleLinear()
-                  .domain([0, d3.max(dataset, function(d) {return d.rats;})
-                  .rangeRound([height - padding, padding]);
+        y = d3.scaleLinear()
+              .domain([0, d3.max(dataset, function(d) {return d.rats;})])
+              .rangeRound([height - padding, padding]);
 
         svgContainer3.selectAll("rect")
             .data(dataset)
