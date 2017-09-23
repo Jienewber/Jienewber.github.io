@@ -201,7 +201,7 @@
     // Part 3: Bar Chart
     var ratData = [];
 
-    d3.csv("data/rat-data-1.csv.csv", function(d) {
+    d3.csv("data/rat-data-1.csv", function(d) {
       return {
         city : d.city,
         rats : +d.rats
@@ -251,6 +251,23 @@
           .attr("y", function(d) { return y(d.rats); })
           .attr("height", function(d) { return y(d.rats); })
           .attr("width", x.bandwidth());
+
+      g3.append("g")
+            .attr("class", "axis")
+            .attr("transform", "translate(0," + (height3 - padding) + ")")
+            .call(d3.axisBottom(x));
+
+      g3.append("g")
+            .attr("class", "axis")
+            .call(d3.axisLeft(y).ticks(null, "s"))
+            .append("text")
+            .attr("x", 2)
+            .attr("y", y(y.ticks().pop()) + 0.5)
+            .attr("dy", "0.32em")
+            .attr("fill", "#000")
+            .attr("font-weight", "bold")
+            .attr("text-anchor", "start")
+            .text("Amount");
 
 
     // d3.select("#ratdata1").on("click", function() {
@@ -313,24 +330,7 @@
     //         //   return tooltip.style("visibility", "hidden");
     //         // });
 
-        // Add axis 
-        svgContainer3.append("g")
-              .attr("class", "axis")
-              .attr("transform", "translate(0," + (height3-padding) + ")")
-              .append("text")
-              .attr("y", width3)
-              .text("Cities");
-
-        svgContainer3.append("g")
-              .attr("class", "axis")
-              .attr("transform", "translate(" + padding + ", 0)")
-              .call(d3.axisLeft(y).ticks(null, "s"))
-              .append("text")
-              .attr("x", 2 )
-              .attr("y", height3 - padding)
-              .attr("font-weight", "bold") // specify the font style of Amount
-              .attr("text-anchor", "start")
-              .text("Rats");
+       
     }
 
     // Part 4: Line chart transition
