@@ -199,34 +199,16 @@
     }
 
     // Part 3: Bar Chart
-    var ratChanges = [];
+    var ratData = [];
 
-    d3.select("#ratdata1").on("click", function() {
-        d3.csv("data/rat-data-1.csv", function(d) {
-          return {
-            city : d.city,
-            rats : +d.rats
-          };
-        }, function(error, rows) {
-          if (error) throw error;
-          ratChanges = rows;
-          console.log(ratChanges);
-          updateChange(ratChanges);
-        });  
-    });
-
-    d3.select("#ratdata2").on("click", function() {
-        d3.csv("data/rat-data-2.csv", function(d) {
-          return {
-            city : d.city,
-            rats : +d.rats
-          };
-        }, function(error, rows) {
-          if (error) throw error;
-          ratChanges = rows;
-          console.log(ratChanges);
-          updateChange(ratChanges);
-        });  
+    d3.csv("data/rat-data-1.csv.csv", function(d) {
+      return {
+        city : d.city,
+        rats : +d.rats
+      };
+      }, function(error, rows) {
+      ratData = rows;
+      createBarVisualization(ratData);
     });
 
     var svgWidth3 = 300,
@@ -240,41 +222,105 @@
             .attr("y", 180)
             .attr("width", svgWidth3)
             .attr("height", svgHeight3)
-            .attr("style", "outline: thin solid maroon")
-            .append("g")
+            .attr("style", "outline: thin solid maroon"),
+        g3 = svgContainer3.append("g")
             .attr("transform", "translate(" + margin3.left + "," + margin3.top + ")")
             .attr("style", "outline: black");
 
 
-    function updateChange(dataset) {
-        console.log(`dataset.length ${dataset.length}`)
+    function createBarVisualization(dataset){
+      // Get length of Array and set length so we can an input dataset of variable length
+      var padding = 20,
+      y = d3.scaleLinear()
+        .domain([0, d3.max(dataset, function(d) {return d.rats;}])
+        .rangeRound([height3 - padding, padding]); // reverse y to make the larger values on the top
 
-        var padding = 20,
-        y = d3.scaleLinear()
-              .domain([0, d3.max(dataset, function(d) {return d.rats;})])
-              .rangeRound([padding, height3 - padding]); // different from scatter plots, should make range from smaller value to larger value
-        console.log(d3.max(dataset, function(d) {return d.rats;}));
+      // Select and generate rectangle elements
+      var rect = g3.selectAll( "rect" )
+        .data(dataset)
+        .enter()
+        .append("rect")
+        .attr( "x", function(d,i){
+          return i * (width3/dataset.length) + 30; 
+        })
+        .attr( "y", function(d){
+          return y(d.rats); // Set y coordinate of rect using the y scale
+        })
+        .attr( "width", (width3/dataset.length) - 1) 
+        .attr( "height", function(d){
+          return y(d.rats); // Set height of using the scale
+        })
+        .attr( "fill", "steelblue")
+        .on("mouseover", function(d){
+          return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
+        })
+        .on("mousemove", function(d){
+          return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
+        })
+        .on("mouseout", function(d){
+          return tooltip.style("visibility", "hidden");
+        });
+
+
+    // d3.select("#ratdata1").on("click", function() {
+    //     d3.csv("data/rat-data-1.csv", function(d) {
+    //       return {
+    //         city : d.city,
+    //         rats : +d.rats
+    //       };
+    //     }, function(error, rows) {
+    //       if (error) throw error;
+    //       ratChanges = rows;
+    //       console.log(ratChanges);
+    //       updateChange(ratChanges);
+    //     });  
+    // });
+
+    // d3.select("#ratdata2").on("click", function() {
+    //     d3.csv("data/rat-data-2.csv", function(d) {
+    //       return {
+    //         city : d.city,
+    //         rats : +d.rats
+    //       };
+    //     }, function(error, rows) {
+    //       if (error) throw error;
+    //       ratChanges = rows;
+    //       console.log(ratChanges);
+    //       updateChange(ratChanges);
+    //     });  
+    // });
+
+    
+
+    // function updateChange(dataset) {
+    //     console.log(`dataset.length ${dataset.length}`)
+
+    //     var padding = 20,
+    //     y = d3.scaleLinear()
+    //           .domain([0, d3.max(dataset, function(d) {return d.rats;})])
+    //           .rangeRound([padding, height3 - padding]); // different from scatter plots, should make range from smaller value to larger value
+    //     console.log(d3.max(dataset, function(d) {return d.rats;}));
         
-        svgContainer3.append("g")
-          .selectAll("rect")
-          .data(dataset)
-          .enter().append("rect")
-          .transition()
-          .attr("x", function(d, i) {return i * (width3 / dataset.length) + 20;}) // Set x coord of rect using length of array, start from (20,y)
-          .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
-          .attr("width", width3 / dataset.length - 2) // Set bar width using length of array, leave gap of 2px between rect
-          .attr("height", function(d) {return y(d.rats);})
-          .attr("fill", "maroon");
-            // .on("mouseover", function(d){
-            //   return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
-            // })
-            // .on("mousemove", function(d){
-            //   return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
-            // }) // d3.event.pageX / d3.event.pageY is the current mouse coordinate.
-            // // Notes: separate those two mouseovers, so that the label could move along with the mouse, otherwise it will stick to the original location until you move the mouse out and over again.
-            // .on("mouseout", function(d){
-            //   return tooltip.style("visibility", "hidden");
-            // });
+    //     svgContainer3.append("g")
+    //       .selectAll("rect")
+    //       .data(dataset)
+    //       .enter().append("rect")
+    //       .transition()
+    //       .attr("x", function(d, i) {return i * (width3 / dataset.length) + 20;}) // Set x coord of rect using length of array, start from (20,y)
+    //       .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
+    //       .attr("width", width3 / dataset.length - 2) // Set bar width using length of array, leave gap of 2px between rect
+    //       .attr("height", function(d) {return y(d.rats);})
+    //       .attr("fill", "maroon");
+    //         // .on("mouseover", function(d){
+    //         //   return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
+    //         // })
+    //         // .on("mousemove", function(d){
+    //         //   return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
+    //         // }) // d3.event.pageX / d3.event.pageY is the current mouse coordinate.
+    //         // // Notes: separate those two mouseovers, so that the label could move along with the mouse, otherwise it will stick to the original location until you move the mouse out and over again.
+    //         // .on("mouseout", function(d){
+    //         //   return tooltip.style("visibility", "hidden");
+    //         // });
 
         // Add axis 
         svgContainer3.append("g")
