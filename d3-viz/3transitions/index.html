@@ -229,15 +229,14 @@
 
 
     function createBarVisualization(dataset){
-      // Get length of Array and set length so we can an input dataset of variable length
   
       var x = d3.scaleBand()
-          .rangeRound([0, width3])
+          .rangeRound([padding, width3 - padding])
           .paddingInner(0.2) // Gap between the bars
           .align(0.3);
 
       var y = d3.scaleLinear()
-          .rangeRound([height3, 0]);
+          .rangeRound([height3 - padding, padding]);
 
       x.domain(dataset.map(function(d) { return d.city; }));
       y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
@@ -254,11 +253,12 @@
 
       g3.append("g")
             .attr("class", "axis")
-            .attr("transform", "translate(0," + height3 + ")")
+            .attr("transform", "translate(0," + (height3 - padding) + ")")
             .call(d3.axisBottom(x));
 
       g3.append("g")
             .attr("class", "axis")
+            .attr("transform", "translate(" + padding + ", 0)")
             .call(d3.axisLeft(y).ticks(null, "s"))
             .append("text")
             .attr("x", 2)
@@ -268,7 +268,6 @@
             .attr("font-weight", "bold")
             .attr("text-anchor", "start")
             .text("Amount");
-
 
     // d3.select("#ratdata1").on("click", function() {
     //     d3.csv("data/rat-data-1.csv", function(d) {
