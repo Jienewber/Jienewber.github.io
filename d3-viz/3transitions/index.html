@@ -229,7 +229,8 @@
 
 
     function createBarVisualization(dataset){
-  
+      var padding = 50;
+      
       var x = d3.scaleBand()
           .rangeRound([padding, width3 - padding])
           .paddingInner(0.2) // Gap between the bars
