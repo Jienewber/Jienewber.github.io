@@ -279,8 +279,7 @@
             };
           }, function(error, rows) {
             if (error) throw error;
-            ratData = rows;
-            updateChange(ratData);
+            updateChange(rows);
           });  
       });
 
@@ -293,19 +292,18 @@
             };
           }, function(error, rows) {
             if (error) throw error;
-            ratData = rows;
-            updateChange(ratData);
+            updateChange(rows);
           });  
       });
 
       function updateChange(dataset) {
-          console.log(`dataset.length ${dataset.length}`);
+          console.log(`dataset：${dataset}`);
           y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
 
-          g3.append("g")
-            .selectAll("rect")
+          g3.selectAll(".bar")
             .data(dataset)
             .transition()
+            .selectAll("rect")
             .attr("y", function(d) { return y(d.rats); })
             .attr("height", function(d) { return height3 - padding - y(d.rats); });
       }  
