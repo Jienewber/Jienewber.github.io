@@ -211,9 +211,9 @@
       createBarVisualization(ratData);
     });
 
-    var svgWidth3 = 300,
+    var svgWidth3 = 600,
         svgHeight3 = 400,
-        margin3 = {top: 10, right: 10, bottom: 10, left: 10},
+        margin3 = {top: 0, right: 0, bottom: 0, left: 0},
         width3 = svgWidth3 - margin3.left - margin3.right,
         height3 = svgHeight3 - margin3.top - margin3.bottom,
 
@@ -230,7 +230,7 @@
 
     function createBarVisualization(dataset){
       var padding = 50;
-      
+
       var x = d3.scaleBand()
           .rangeRound([padding, width3 - padding])
           .paddingInner(0.2) // Gap between the bars
@@ -249,7 +249,7 @@
           .attr("class", "bar")
           .attr("x", function(d) { return x(d.city); })
           .attr("y", function(d) { return y(d.rats); })
-          .attr("height", function(d) { return y(d.rats); })
+          .attr("height", function(d) { return height3 - padding - y(d.rats); })
           .attr("width", x.bandwidth());
 
       g3.append("g")
