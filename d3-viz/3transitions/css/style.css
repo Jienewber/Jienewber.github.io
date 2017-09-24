@@ -92,3 +92,7 @@ text {
   stroke: steelblue;
   stroke-width: 1.5px;
 }
+
+.bar {
+  fill: "maroon";
+}
