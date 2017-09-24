@@ -305,10 +305,9 @@
           console.log(dataset.rats);
           y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
 
-          g3.selectAll(".bar")
+          g3.selectAll("rect")
             .data(dataset)
             .transition()
-            .selectAll("rect")
             .attr("y", function(d) { return y(d.rats); })
             .attr("height", function(d) { return height3 - padding - y(d.rats); });
       }  
