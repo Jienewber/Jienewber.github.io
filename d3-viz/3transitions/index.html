@@ -211,7 +211,7 @@
       createBarVisualization(ratData);
     });
 
-    var svgWidth3 = 600,
+    var svgWidth3 = 500,
         svgHeight3 = 400,
         margin3 = {top: 0, right: 0, bottom: 0, left: 0},
         width3 = svgWidth3 - margin3.left - margin3.right,
@@ -270,67 +270,45 @@
             .attr("text-anchor", "start")
             .text("Amount");
 
-    // d3.select("#ratdata1").on("click", function() {
-    //     d3.csv("data/rat-data-1.csv", function(d) {
-    //       return {
-    //         city : d.city,
-    //         rats : +d.rats
-    //       };
-    //     }, function(error, rows) {
-    //       if (error) throw error;
-    //       ratChanges = rows;
-    //       console.log(ratChanges);
-    //       updateChange(ratChanges);
-    //     });  
-    // });
+      d3.select("#ratdata1").on("click", function() {
+          console.log("clicked rat data 1");
+          d3.csv("data/rat-data-1.csv", function(d) {
+            return {
+              city : d.city,
+              rats : +d.rats
+            };
+          }, function(error, rows) {
+            if (error) throw error;
+            ratData = rows;
+            updateChange(ratData);
+          });  
+      });
 
-    // d3.select("#ratdata2").on("click", function() {
-    //     d3.csv("data/rat-data-2.csv", function(d) {
-    //       return {
-    //         city : d.city,
-    //         rats : +d.rats
-    //       };
-    //     }, function(error, rows) {
-    //       if (error) throw error;
-    //       ratChanges = rows;
-    //       console.log(ratChanges);
-    //       updateChange(ratChanges);
-    //     });  
-    // });
+      d3.select("#ratdata2").on("click", function() {
+          console.log("clicked rat data 2");
+          d3.csv("data/rat-data-2.csv", function(d) {
+            return {
+              city : d.city,
+              rats : +d.rats
+            };
+          }, function(error, rows) {
+            if (error) throw error;
+            ratData = rows;
+            updateChange(ratData);
+          });  
+      });
 
-    
+      function updateChange(dataset) {
+          console.log(`dataset.length ${dataset.length}`);
+          y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
 
-    // function updateChange(dataset) {
-    //     console.log(`dataset.length ${dataset.length}`)
-
-    //     var padding = 20,
-    //     y = d3.scaleLinear()
-    //           .domain([0, d3.max(dataset, function(d) {return d.rats;})])
-    //           .rangeRound([padding, height3 - padding]); // different from scatter plots, should make range from smaller value to larger value
-    //     console.log(d3.max(dataset, function(d) {return d.rats;}));
-        
-    //     svgContainer3.append("g")
-    //       .selectAll("rect")
-    //       .data(dataset)
-    //       .enter().append("rect")
-    //       .transition()
-    //       .attr("x", function(d, i) {return i * (width3 / dataset.length) + 20;}) // Set x coord of rect using length of array, start from (20,y)
-    //       .attr("y", function(d) { return height3 - padding - y(d.rats);}) 
-    //       .attr("width", width3 / dataset.length - 2) // Set bar width using length of array, leave gap of 2px between rect
-    //       .attr("height", function(d) {return y(d.rats);})
-    //       .attr("fill", "maroon");
-    //         // .on("mouseover", function(d){
-    //         //   return tooltip.style("visibility", "visible").text(d.city + ": " + d.rats);
-    //         // })
-    //         // .on("mousemove", function(d){
-    //         //   return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px").text(d.city + ": " + d.rats);
-    //         // }) // d3.event.pageX / d3.event.pageY is the current mouse coordinate.
-    //         // // Notes: separate those two mouseovers, so that the label could move along with the mouse, otherwise it will stick to the original location until you move the mouse out and over again.
-    //         // .on("mouseout", function(d){
-    //         //   return tooltip.style("visibility", "hidden");
-    //         // });
-
-       
+          g3.append("g")
+            .selectAll("rect")
+            .data(dataset)
+            .transition()
+            .attr("y", function(d) { return y(d.rats); })
+            .attr("height", function(d) { return height3 - padding - y(d.rats); });
+      }  
     }
 
     // Part 4: Line chart transition
