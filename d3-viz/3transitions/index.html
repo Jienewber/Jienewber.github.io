@@ -279,7 +279,9 @@
             };
           }, function(error, rows) {
             if (error) throw error;
-            updateChange(rows);
+            ratData = rows;
+            console.log(ratData);
+            updateChange(ratData);
           });  
       });
 
@@ -292,12 +294,15 @@
             };
           }, function(error, rows) {
             if (error) throw error;
-            updateChange(rows);
+            ratData = rows;
+            console.log(ratData);
+            updateChange(ratData);
           });  
       });
 
       function updateChange(dataset) {
-          console.log(`dataset：${dataset}`);
+          console.log(dataset);
+          console.log(dataset.rats);
           y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
 
           g3.selectAll(".bar")
