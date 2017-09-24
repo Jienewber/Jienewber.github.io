@@ -211,7 +211,7 @@
       createBarVisualization(ratData);
     });
 
-    var svgWidth3 = 500,
+    var svgWidth3 = 550,
         svgHeight3 = 400,
         margin3 = {top: 0, right: 0, bottom: 0, left: 0},
         width3 = svgWidth3 - margin3.left - margin3.right,
@@ -233,7 +233,7 @@
 
       var x = d3.scaleBand()
           .rangeRound([padding, width3 - padding])
-          .paddingInner(0.2) // Gap between the bars
+          .paddingInner(0.5) // Gap between the bars
           .align(0.3);
 
       var y = d3.scaleLinear()
@@ -305,7 +305,7 @@
           console.log(dataset.rats);
           y.domain([0, d3.max(dataset, function(d) { return d.rats; })]);
 
-          g3.selectAll("rect")
+          g3.selectAll("rect")  // Notice: select rectangles directly, not the .bar
             .data(dataset)
             .transition()
             .attr("y", function(d) { return y(d.rats); })
