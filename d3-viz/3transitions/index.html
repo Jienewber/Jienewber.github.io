@@ -35,10 +35,8 @@
     // Part 1 Rectangle
     var svgContainer1 = d3.select("div.board").append("svg")
       .attr("width", 300)
-      .attr("height", 450)
-      .style("border-color", "black")
-      .style("border-style", "solid")
-      .style("border-width", "1px");
+      .attr("height", 400)
+      .style("style", "outline: thin solid maroon");
 
      
     // Draw the Rectangle
@@ -339,10 +337,14 @@
         .y(function(d) { return y(d.rate); });
 
     var svgContainer4 = d3.select("div.board").append("svg")
+        .attr("y", 180)
         .attr("width", svgWidth4)
         .attr("height", svgHeight4)
-        .append("g")
-        .attr("transform", "translate(" + margin4.left + "," + margin4.top + ")");
+        .attr("style", "outline: thin solid maroon"),
+        g4 = svgContainer4.append("g")
+            .attr("transform", "translate(" + margin4.left + "," + margin4.top + ")")
+            .attr("style", "outline: black");
+
 
     d3.csv("data/unemployment_2005_2015.csv", function(error, data) {
       if (error) throw error;
@@ -356,12 +358,12 @@
       x.domain(d3.extent(data, function(d) { return d.date; }));
       y.domain(d3.extent(data, function(d) { return d.rate; }));
 
-      svgContainer4.append("g")
+      g4.append("g")
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height4 + ")")
           .call(xAxis);
 
-      svgContainer4.append("g")
+      g4.append("g")
           .attr("class", "y axis")
           .call(yAxis)
         .append("text")
@@ -371,7 +373,7 @@
           .style("text-anchor", "end")
           .text("Unemployment Rate (%)");
 
-      svgContainer4.append("path")
+      g4.append("path")
           .datum(data)
           .attr("class", "line")
           .attr("d", line);
