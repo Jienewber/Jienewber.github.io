@@ -400,41 +400,41 @@
           .ease(d3.easeLinear) // Set Easing option
           .attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
       
-        // Add tooltip
-        // Create SVG for Tooltip and Circle on Mouseover
-        var focus = g4.append("g")
-                        .attr("class", "focus")
-                        .style("display", "none");
+        // // Add tooltip
+        // // Create SVG for Tooltip and Circle on Mouseover
+        // var focus = g4.append("g")
+        //                 .attr("class", "focus")
+        //                 .style("display", "none");
 
-        // Append a circle and text to show on Mouseover
-        focus.append("circle")
-            .attr("r", 4.5);
+        // // Append a circle and text to show on Mouseover
+        // focus.append("circle")
+        //     .attr("r", 4.5);
 
-        focus.append("text")
-            .attr("x", 9)
-            .attr("dy", ".35em");
+        // focus.append("text")
+        //     .attr("x", 9)
+        //     .attr("dy", ".35em");
 
-        // Append overlay rectangle as container for Circle and Tooltips
-        // that allows user to hover anywhere on graphic
-        g4.append("rect")
-            .attr("class", "overlay")
-            .attr("width", width4)
-            .attr("height", height4)
-            .on("mouseover", function() { focus.style("display", null); })
-            .on("mouseout", function() { focus.style("display", "none"); })
-            .on("mousemove", mousemove);
+        // // Append overlay rectangle as container for Circle and Tooltips
+        // // that allows user to hover anywhere on graphic
+        // g4.append("rect")
+        //     .attr("class", "overlay")
+        //     .attr("width", width4)
+        //     .attr("height", height4)
+        //     .on("mouseover", function() { focus.style("display", null); })
+        //     .on("mouseout", function() { focus.style("display", "none"); })
+        //     .on("mousemove", mousemove);
 
-        // Mousemove function that sets location and changes properties of Focus SVG
-        function mousemove() {
-          var x0 = x.invert(d3.mouse(this)[0]),
-              i = bisectDate(data, x0, 1),
-              d0 = data[i - 1],
-              d1 = data[i],
-              d = x0 - d0.date > d1.date - x0 ? d1 : d0;
-          focus.attr("transform", "translate(" + x(d.date) + "," + y(d.rate) + ")")
-              .select("text")
-              .text(function(d) {return d.data + ": " + d.rate;});
-        }
+        // // Mousemove function that sets location and changes properties of Focus SVG
+        // function mousemove() {
+        //   var x0 = x.invert(d3.mouse(this)[0]),
+        //       i = bisectDate(data, x0, 1),
+        //       d0 = data[i - 1],
+        //       d1 = data[i],
+        //       d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+        //   focus.attr("transform", "translate(" + x(d.date) + "," + y(d.rate) + ")")
+        //       .select("text")
+        //       .text(function(d) {return d.data + ": " + d.rate;});
+        // }
       });
 
       d3.select("#resetTime").on("click", function() {
