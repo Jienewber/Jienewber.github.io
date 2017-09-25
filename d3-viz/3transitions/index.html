@@ -435,7 +435,7 @@
               .select("text")
               .text(function(d) {return d.data + ": " + d.rate;});
         }
-      };
+      });
 
       d3.select("#resetTime").on("click", function() {
         d3.select(".line").remove();
