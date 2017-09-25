@@ -47,7 +47,7 @@
       .attr("height", 50);
 
     d3.select("#start").on("click", function() {
-      d3.selectAll("rect")
+      d3.select("rect")
         .transition()
         .attr("width", 100)
         .attr("height", 100) // new size
@@ -370,6 +370,7 @@
 
       g4.append("g")
           .attr("class", "y axis")
+          .attr("transform", "translate(" + padding4 + ", 0)")
           .call(yAxis)
         .append("text")
           .attr("transform", "rotate(-90)")
