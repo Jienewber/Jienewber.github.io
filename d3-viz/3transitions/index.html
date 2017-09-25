@@ -28,6 +28,9 @@
       <h2>Part 3: Bar Chart</h2>
         <button id="ratdata1" checked>Dataset 1</button>
         <button id="ratdata2" style="margin-left: 5px">Dataset 2</button>
+      <h2>Part 4: Line Chart</h2>
+        <button id="startTime" checked>Start Time Animation</button>
+        <button id="resetTime" style="margin-left: 5px">Reset</button>
     </div>
 
     <script>
@@ -47,7 +50,7 @@
       .attr("height", 50);
 
     d3.select("#start").on("click", function() {
-      d3.select("rect")
+      d3.select("rect") // select the first "rect" or just change it to rectangle
         .transition()
         .attr("width", 100)
         .attr("height", 100) // new size
@@ -319,7 +322,7 @@
         height4 = svgHeight4 - margin4.top - margin4.bottom,
         padding4 = 50;
 
-    var parseDate = d3.timeParse("%b %Y");
+    var parseDate = d3.timeParse("%b %Y");  //%b-
 
     var x = d3.scaleTime()
       .range([padding4, width4 - padding4]);
@@ -379,10 +382,59 @@
           .style("text-anchor", "end")
           .text("Unemployment Rate (%)");
 
-      g4.append("path")
+      d3.select("#startTime").on("click", function() {
+        var path = g4.append("path")
           .datum(dataset)
           .attr("class", "line")
           .attr("d", line);
+
+        // Variable to Hold Total Length
+        var totalLength = path.node().getTotalLength();
+
+        // Set Properties of Dash Array and Dash Offset and initiate Transition
+        path
+          .attr("stroke-dasharray", totalLength + " " + totalLength)
+          .attr("stroke-dashoffset", totalLength)
+          .transition() // Call Transition Method
+          .duration(4000) // Set Duration timing (ms)
+          .ease(d3.easeLinear) // Set Easing option
+          .attr("stroke-dashoffset", 0); // Set final value of dash-offset for transition
+      
+        // Add tooltip
+        var focus = g4.append("g")
+                        .attr("class", "focus")
+                        .style("display", "none");
+
+        focus.append("circle")
+            .attr("r", 4.5);
+
+        focus.append("text")
+            .attr("x", 9)
+            .attr("dy", ".35em");
+
+        g4.append("rect")
+            .attr("class", "overlay")
+            .attr("width", width4)
+            .attr("height", height4)
+            .on("mouseover", function() { focus.style("display", null); })
+            .on("mouseout", function() { focus.style("display", "none"); })
+            .on("mousemove", mousemove);
+
+        function mousemove() {
+          var x0 = x.invert(d3.mouse(this)[0]),
+              i = bisectDate(data, x0, 1),
+              d0 = data[i - 1],
+              d1 = data[i],
+              d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+          focus.attr("transform", "translate(" + x(d.date) + "," + y(d.rate) + ")");
+          focus.select("text").text(d.data + ": " + d.rate);
+        }
+      };
+
+      d3.select("#resetTime").on("click", function() {
+        d3.select(".line").remove();
+      };
+      
     }
 
 
