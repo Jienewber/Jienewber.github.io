@@ -36,7 +36,7 @@
     var svgContainer1 = d3.select("div.board").append("svg")
       .attr("width", 300)
       .attr("height", 400)
-      .style("style", "outline: thin solid maroon");
+      .attr("style", "outline: thin solid maroon");
 
      
     // Draw the Rectangle
@@ -312,19 +312,20 @@
     }
 
     // Part 4: Line chart transition
-    var svgWidth4 = 300,
+    var svgWidth4 = 600,
         svgHeight4 = 400,
         margin4 = {top: 10, right: 10, bottom: 10, left: 10},
         width4 = svgWidth4 - margin4.left - margin4.right,
-        height4 = svgHeight4 - margin4.top - margin4.bottom;
+        height4 = svgHeight4 - margin4.top - margin4.bottom,
+        padding4 = 50;
 
     var parseDate = d3.timeParse("%b %Y");
 
     var x = d3.scaleTime()
-      .range([0, width4]);
+      .range([padding4, width4 - padding4]);
 
     var y = d3.scaleLinear()
-        .range([height4, 0]);
+        .range([height4 - padding4, padding4]);
 
     var xAxis = d3.axisBottom()
         .scale(x);
@@ -355,12 +356,16 @@
         d.rate = +d.rate;
       });
 
-      x.domain(d3.extent(data, function(d) { return d.date; }));
-      y.domain(d3.extent(data, function(d) { return d.rate; }));
+      createLineChart(data);
+    });
+
+    function createLineChart(dataset) {
+      x.domain(d3.extent(dataset, function(d) { return d.date; }));
+      y.domain(d3.extent(dataset, function(d) { return d.rate; }));
 
       g4.append("g")
           .attr("class", "x axis")
-          .attr("transform", "translate(0," + height4 + ")")
+          .attr("transform", "translate(0," + (height4 - padding4) + ")")
           .call(xAxis);
 
       g4.append("g")
@@ -374,11 +379,10 @@
           .text("Unemployment Rate (%)");
 
       g4.append("path")
-          .datum(data)
+          .datum(dataset)
           .attr("class", "line")
           .attr("d", line);
-    });
-
+    }
 
 
 
