@@ -81,7 +81,6 @@
 
 		// Set the time slider
 		var inputValue = "January"; // set initial value to be "January"
-		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 		// when the input range changes update the value 
 		d3.select("#timeslide").on("input", function() {
@@ -90,6 +89,7 @@
 
 		// update the fill of each SVG of class "incident" with value
 		function update(value) {
+			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		    document.getElementById("range").innerHTML = months[value];
 		    inputValue = months[value];
 		    console.log(inputValue);
@@ -102,6 +102,7 @@
 		    var d = new Date(data.properties.OPEN_DT); 
 		    console.log(d);
 		    console.log(d.getMonth());
+		    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		    console.log(months[d.getMonth()]);
 		    var m = months[d.getMonth()];
  		    if (m == inputValue) {
