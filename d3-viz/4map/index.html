@@ -75,7 +75,7 @@
 				.attr( "stroke", "#999")
 				.on("mouseover", function(d) {
 					d3.select("h2").text("Location: " + d.properties.LOCATION_STREET_NAME);
-					d3.select("h3").text("Date: " + new Date(data.properties.OPEN_DT));
+					d3.select("h3").text("Date: " + new Date(d.properties.OPEN_DT));
 				})
 				.on("mouseout", function(d) {
 					d3.select("h2").text("");
