@@ -16,7 +16,7 @@ body {
 
 .board {
   position: absolute;
-  background-color: silver;
+  background-color: black;
   left: 350px;
   right: 0;
   bottom: 0;
