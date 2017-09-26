@@ -16,7 +16,7 @@ body {
 
 .board {
   position: absolute;
-  background-color: black;
+  background-color: #dddddd;
   left: 350px;
   right: 0;
   bottom: 0;
@@ -75,6 +75,10 @@ text {
 }
 
 .incident {
-  fill: steelblue;
+  fill: #7bb3d1;
   stroke: #999;
+}
+
+.hover {
+  fill: #016eae;
 }

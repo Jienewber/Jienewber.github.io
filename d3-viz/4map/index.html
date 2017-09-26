@@ -13,8 +13,9 @@
 	<div class="header"></div>
     <div id="container" class="board"></div>
     <div class="sidebar">
-      <h1>Rodents in Boston</h1>
+      <h1>Rodent Incidents in Boston</h1>
       <p>Source: DUSPviz - D3 Workshop Series 4<br><a href="http://duspviz.mit.edu/d3-workshop/mapping-data-with-d3/">Mapping Data with D3</a></p>
+      <h2></h2>
     </div>
 
     <script>
@@ -65,6 +66,14 @@
 				.append( "path" )
 				.attr( "d", geoPath)
 				.attr( "class", "incident")
+				.on("mouseover", function(d) {
+					d3.select("h2").text("Location: " + d.properties.LOCATION_STREET_NAME);
+					d3.select("this").attr("class", "incident hover");
+				})
+				.on("mouseout", function(d) {
+					d3.select("h2").text("");
+					d3.select("this").attr("class", "incident");
+				})
 
 	</script>
 
