@@ -74,25 +74,7 @@ text {
   fill: white;
 }
 
-.axis path,
-.axis line {
-  fill: none;
-  stroke: floralwhite;
-  shape-rendering: crispEdges;
-}
-
-.axis text {
-  font-family: "open sans", sans-serif;
-  font-size: 12px;
-  fill: floralwhite;
-}
-
-.line {
-  fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
-}
-
-.bar {
-  fill: maroon;
+.incident {
+  fill: steelblue;
+  stroke: #999;
 }
