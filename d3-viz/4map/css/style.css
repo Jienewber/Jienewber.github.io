@@ -41,6 +41,7 @@ body {
   margin-top: 50px;
   margin-bottom: 50px;
   margin-right: 50px;
+  margin-left: 20px;
 }
 
 
@@ -67,11 +68,11 @@ h1 {
 }
 
 h2 {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 h3 {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 p {
