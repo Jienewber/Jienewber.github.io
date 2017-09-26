@@ -3,20 +3,24 @@
 <head>
 	<title>test date</title>
 	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+	<link href="dist/css/tabulator.min.css" rel="stylesheet">
+	<script type="text/javascript" src="dist/js/tabulator.min.js"></script>
 </head>
 <body>
-	<div>
-		<h1></h1>
-	</div>
+	<div id="example-table"></div>
 	<script>
 		var OPEN_DT = "05\/03\/2013 11:12:12 AM";
 		var d = new Date(OPEN_DT);
 		var month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		var m = month[d.getMonth()];
 		console.log(m);
-		d3.select("h1")
-			.append("text").attr("dy", "0em").text("d: " + d)
-			.append("text").attr("dy", "1.2em").text("m: " + m)
+
+		$("#example-table").tabulator({
+		  columns:[
+		    {title:"Location", field:"location", sortable:true, width:200},
+		    {title:"Date", field:"date", sortable:true, sorter:"number"},
+		  ],
+		});
 	</script>
 </body>
 </html>

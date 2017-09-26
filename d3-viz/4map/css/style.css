@@ -36,7 +36,10 @@ body {
 
 #sliderContainer {
   top: 250px;
+  line-height: 16px;
+  color: #dd7c8a;
 }
+
 
 @media screen and (max-width: 900px) {
   .map {
@@ -61,11 +64,11 @@ h1 {
 }
 
 h2 {
-  font-size: 18px;
+  font-size: 14px;
 }
 
 h3 {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 p {
