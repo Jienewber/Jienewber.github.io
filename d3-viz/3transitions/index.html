@@ -416,7 +416,7 @@
 
         // Append overlay rectangle as container for Circle and Tooltips
         // that allows user to hover anywhere on graphic
-        g4.append("rect")
+        g4.append("g").append("rect")
             .attr("class", "overlay")
             .attr("width", width4)
             .attr("height", height4)
