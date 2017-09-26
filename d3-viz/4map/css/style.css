@@ -38,7 +38,9 @@ body {
   top: 250px;
   line-height: 16px;
   color: #dd7c8a;
-  margin: 50px;
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-right: 50px;
 }
 
 
