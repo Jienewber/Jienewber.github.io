@@ -25,7 +25,7 @@
 
     <script>
     	var svgWidth = 700,
-    		svgHeight = 580,
+    		svgHeight = 600,
     		margin = {top: 10, right: 10, bottom: 10, left: 10},
         	width = svgWidth - margin.left - margin.right,
         	height = svgHeight - margin.top - margin.bottom,
@@ -40,7 +40,7 @@
         			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
         // Set the time slider variables
-		var inputValue = "January";
+		var inputValue = "January"; // set initial month = January
 		var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
         // Width and Height of the whole visualization
@@ -113,18 +113,6 @@
 		        return "#7bb3d1";
 		    };
 		}
-
-		// // Set initial state when loading the map: month = January
-		// function initialDate(d,i){
-		//     var d = new Date(d.properties.OPEN_DT);
-		//     var m = month[d.getMonth()];
-		//     if (m === "January") {
-		//         this.parentElement.appendChild(this);
-		//         return "red";
-		//     } else {
-		//         return "#999";
-		//     };
-		// }
 
 	</script>
 
