@@ -4,6 +4,7 @@
 	<title>First D3 Map</title>
 	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
 	<script src="data/boston_neighborhoods.json"></script>
+	<script src="data/boston_rodents.json"></script>
 	<link rel="stylesheet" href="css/leaflet.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/style.css" />
@@ -53,6 +54,18 @@
 		    .attr( "fill", "#ccc" )
 		    .attr( "stroke", "#fff")
 		    .attr( "d", geoPath );
+
+		// Add rodent data
+		var rodent = svg.append("g");
+
+		rodent.selectAll("path")
+				.data( rodents_json.features )
+				.enter()
+				.append( "path" )
+				.attr( "fill", "#900")
+				.attr( "stroke", "#999")
+				.attr( "d", geoPath);
+
 	</script>
 
 
