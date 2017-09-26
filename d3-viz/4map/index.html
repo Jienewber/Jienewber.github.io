@@ -95,7 +95,6 @@
 			var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		    document.getElementById("range").innerHTML = months[value];
 		    inputValue = months[value];
-		    console.log(inputValue);
 		    d3.selectAll(".incident")
 		        .attr("fill", dateMatch);
 		}
@@ -105,6 +104,7 @@
 		    var d = new Date(data.properties.OPEN_DT); 
 		    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		    var m = months[d.getMonth()];
+		    console.log(inputValue);
 		    if (inputValue === null) {
 		    	inputValue = "January";
 		    }
