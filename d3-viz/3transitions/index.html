@@ -420,6 +420,8 @@
             .attr("class", "overlay")
             .attr("width", width4)
             .attr("height", height4)
+            .attr("fill", none)
+            .attr("pointer-events", all)
             .on("mouseover", function() { focus.style("display", null); })
             .on("mouseout", function() { focus.style("display", "none"); })
             .on("mousemove", mousemove);
