@@ -1,0 +1,98 @@
+body {
+    padding: 0;
+    font-family: helvetica, arial, sans-serif;
+    overflow: hidden;
+}
+
+.header {
+  position: absolute;
+  height: 50px;
+  width: 100%;
+  background-color: #444;
+  color: #fff;
+  position: absolute;
+  top: 0;
+}
+
+.board {
+  position: absolute;
+  background-color: silver;
+  left: 350px;
+  right: 0;
+  bottom: 0;
+  top: 50px;
+}
+
+.sidebar {
+  position: absolute;
+  left: 0px;
+  width: 350px;
+  top: 50px;
+  bottom: 0;
+  padding: 20px;
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+@media screen and (max-width: 900px) {
+  .map {
+    left: 360px;
+  }
+  .sidebar {
+    width: 360px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .map {
+    left: 0;
+  }
+  .sidebar {
+    display: none;
+  }
+}
+
+h1 {
+  font-size: 28px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+p {
+  font-size: 12px;
+}
+
+button {
+  font-size: 12px;
+}
+
+text {
+  font-family: "open sans", sans-serif;
+  font-size: 12px;
+  fill: white;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: floralwhite;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  font-family: "open sans", sans-serif;
+  font-size: 12px;
+  fill: floralwhite;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.bar {
+  fill: maroon;
+}

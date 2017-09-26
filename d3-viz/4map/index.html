@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>First D3 Map</title>
+	<script src="http://d3js.org/d3.v4.min.js" charset="utf-8"></script>
+	<script src="data/boston_neighborhoods.json"></script>
+	<link rel="stylesheet" href="css/leaflet.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+	<div class="header"></div>
+    <div id="container" class="board"></div>
+    <div class="sidebar">
+      <h1>Rodents in Boston</h1>
+      <p>Source: DUSPviz - D3 Workshop Series 4<br><a href="http://duspviz.mit.edu/d3-workshop/mapping-data-with-d3/">Mapping Data with D3</a></p>
+    </div>
+
+    <script>
+    	var svgWidth = 700,
+    		svgHeight = 580,
+    		margin = {top: 10, right: 10, bottom: 10, left: 10},
+        	width = svgWidth - margin.left - margin.right,
+        	height = svgHeight - margin.top - margin.bottom,
+        	svg = d3.select("div.board")
+        			.append("svg")
+        			.attr("width", width)
+        			.attr("height", height)
+        			.attr("style", "outline: thin solid maroon"),
+        	// Append empty placeholder g element to the SVG
+			// g will contain geometry elements
+        	g = svg.append("g")
+        			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    </script>
+
+</body>
+</html>
