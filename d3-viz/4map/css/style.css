@@ -34,6 +34,10 @@ body {
   overflow-y: auto;
 }
 
+#sliderContainer {
+  top: 250px;
+}
+
 @media screen and (max-width: 900px) {
   .map {
     left: 360px;
@@ -74,11 +78,11 @@ text {
   fill: white;
 }
 
-.incident {
+/*.incident {
   fill: #7bb3d1;
   stroke: #999;
 }
 
-.hover {
+.incident:hover {
   fill: #016eae;
-}
+}*/

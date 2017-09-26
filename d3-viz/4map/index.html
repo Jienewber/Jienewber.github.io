@@ -100,12 +100,9 @@
 		// dataMatch function to return color for the points
 		function dateMatch(data, value) {
 		    var d = new Date(data.properties.OPEN_DT); 
-		    console.log(d);
-		    console.log(d.getMonth());
 		    var months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
-		    console.log(months[d.getMonth()]);
 		    var m = months[d.getMonth()];
- 		    if (m == inputValue) {
+ 		    if (m === inputValue) {
 		        this.parentElement.appendChild(this);
 		        return "#dd7c8a";
 		    } else {
